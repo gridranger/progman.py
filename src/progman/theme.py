@@ -1,0 +1,2 @@
+class Theme:
+    background = "white"
