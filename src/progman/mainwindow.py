@@ -1,7 +1,8 @@
-from tkinter import Tk, Label
+from tkinter import Tk, Label, PhotoImage
 
 from language import Language
 from progmanwidget import ProgmanWidget
+from src.progman.menubar import Menubar
 from theme import Theme
 
 
@@ -9,16 +10,28 @@ class MainWindow(Tk, ProgmanWidget):
 
     def __init__(self, language: Language, theme: Theme):
         Tk.__init__(self)
-        ProgmanWidget.__init__(self)
-        self.language = language
-        self.theme = theme
+        self._language = language
+        self._theme = theme
+        ProgmanWidget.__init__(self, "root")
 
     def render(self):
-        label = Label(self, text="Hello, World!", background=self._theme.background)
-        label.pack(pady=20)
+        self._set_title()
+        self._texts["title"].trace("w", self._set_title)
+        self.geometry("640x480")
+        self._icon = PhotoImage(file='../main.png')
+        self.iconphoto(False, self._icon)
+        menubar = Menubar(self)
+        self.configure(menu=menubar)
+        menubar.render()
+        self.update_language()
+        self.update_theme()
 
-    def _update_language(self):
-        self.title(self.language.title)
+    def _set_title(self, *_args):
+        self.title(self.get_label("title"))
 
-    def _update_theme(self):
+    def update_language(self):
+        ProgmanWidget.update_language(self)
+
+    def update_theme(self):
+        ProgmanWidget.update_theme(self)
         self.configure(bg=self.theme.background)
