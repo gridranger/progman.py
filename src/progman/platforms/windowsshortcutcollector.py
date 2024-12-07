@@ -6,8 +6,8 @@ from re import compile as re_compile
 from win32com.client import Dispatch
 from win32com.universal import com_error
 
-from progman.platforms.shortcut import Shortcut
 from progman.platforms.shortcutcollector import ShortcutCollector
+from progman.shortcut import Shortcut
 
 
 class WindowsShortcutCollector(ShortcutCollector):
@@ -19,7 +19,7 @@ class WindowsShortcutCollector(ShortcutCollector):
         links = {}
         link_list = self._list_start_menu_items()
         from json import dumps
-        print(dumps(link_list, indent=2))
+        print(dumps([link.to_dict() for link in link_list], indent=2))
         return links
 
     @staticmethod
@@ -32,7 +32,7 @@ class WindowsShortcutCollector(ShortcutCollector):
                     for file in files:
                         if file.endswith('.lnk'):
                             shortcut_path = Path(root, file)
-                            shortcut = shell.CreateShortcut(shortcut_path)
+                            shortcut = shell.CreateShortcut(str(shortcut_path))
                             common_shortcut = WindowsShortcutCollector._covert_shortcut(shortcut)
                             shortcuts.append(common_shortcut)
         return shortcuts
