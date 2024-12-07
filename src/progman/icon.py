@@ -1,5 +1,5 @@
 from subprocess import Popen
-from tkinter import Frame, Label, PhotoImage, StringVar, Event
+from tkinter import Event, Frame, Label, PhotoImage
 
 from progman.progmanwidget import ProgmanWidget
 from progman.shortcut import Shortcut
@@ -12,9 +12,9 @@ class IconWidget(Frame, ProgmanWidget):
         ProgmanWidget.__init__(self, 'icon')
         self.configure(background=self.theme.background)
         self._shortcut = shortcut
-        self._icon: PhotoImage|None = None
-        self._icon_label: Label|None = None
-        self._text_label: Label|None = None
+        self._icon: PhotoImage | None = None
+        self._icon_label: Label | None = None
+        self._text_label: Label | None = None
 
     @property
     def icon(self) -> PhotoImage:
@@ -43,7 +43,7 @@ class IconWidget(Frame, ProgmanWidget):
         self._shortcut.name = new_name
         self._text_label.configure(text=new_name)
 
-    def on_click(self, _event: Event|None = None) -> None:
+    def on_click(self, _event: Event | None = None) -> None:
         self.select()
         Popen(self._shortcut.launch_command)
         self.after(100, self.deselect)
@@ -59,9 +59,10 @@ class IconWidget(Frame, ProgmanWidget):
 
 if __name__ == "__main__":
     from tkinter import Tk
+
     from progman.language import Language
-    from progman.theme import Theme
     from progman.shortcut import Shortcut
+    from progman.theme import Theme
     t = Tk()
     t.language = Language()
     t.theme = Theme()
