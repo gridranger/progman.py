@@ -1,15 +1,14 @@
 from abc import ABC, abstractmethod
 from tkinter import BaseWidget, StringVar
-from typing import Union
 
-from language import Language
-from theme import Theme
+from .language import Language
+from .theme import Theme
 
 
 class ProgmanWidget(ABC):
 
-    def __init__(self, lid: str, language: Language = None, theme: Theme = None) -> None:
-        self.master: Union[BaseWidget, ProgmanWidget]
+    def __init__(self, lid: str) -> None:
+        self.master: BaseWidget | ProgmanWidget
         self._lid = lid
         self._texts = {}
 
