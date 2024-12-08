@@ -1,10 +1,9 @@
 from abc import ABC, abstractmethod
 
-from progman.shortcut import Shortcut
+from ..shortcut import Shortcut
 
 
 class ShortcutCollector(ABC):
-    tags = ["Accessories", "Games", "Main", "Multimedia", "Office", "Internet", "Creativity"]
 
     @abstractmethod
     def collect_links(self) -> dict:

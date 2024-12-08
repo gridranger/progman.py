@@ -1,6 +1,6 @@
 from tkinter import Menu
 
-from src.progman.progmanwidget import ProgmanWidget
+from progmanwidget import ProgmanWidget
 
 
 class Menubar(Menu, ProgmanWidget):

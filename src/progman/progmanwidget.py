@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from tkinter import BaseWidget, StringVar
 
-from .language import Language
-from .theme import Theme
+from language import Language
+from theme import Theme
 
 
 class ProgmanWidget(ABC):

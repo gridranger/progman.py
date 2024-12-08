@@ -1,11 +1,11 @@
 from tkinter import Tk
 
-from assets import assets
+from assets import asset_storage
 from language import Language
 from progmanwidget import ProgmanWidget
+from menubar import Menubar
 from theme import Theme
 
-from src.progman.menubar import Menubar
 
 
 class MainWindow(Tk, ProgmanWidget):
@@ -20,7 +20,7 @@ class MainWindow(Tk, ProgmanWidget):
         self._set_title()
         self._texts["title"].trace("w", self._set_title)
         self.geometry("640x480")
-        self._icon = assets["progman"]
+        self._icon = asset_storage["progman"]
         self.iconphoto(False, self._icon)
         menubar = Menubar(self)
         self.configure(menu=menubar)

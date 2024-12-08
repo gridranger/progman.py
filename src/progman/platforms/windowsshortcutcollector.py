@@ -6,8 +6,9 @@ from re import compile as re_compile
 from win32com.client import Dispatch
 from win32com.universal import com_error
 
-from progman.platforms.shortcutcollector import ShortcutCollector
-from progman.shortcut import Shortcut
+from .shortcutcollector import ShortcutCollector
+from ..shortcut import Shortcut
+from ..tags import Tags
 
 
 class WindowsShortcutCollector(ShortcutCollector):
@@ -15,12 +16,13 @@ class WindowsShortcutCollector(ShortcutCollector):
     COMMON_START_MENU = Path(environ['PROGRAMDATA'], r'Microsoft\Windows\Start Menu\Programs')
     START_MENU_PATHS = [USER_START_MENU, COMMON_START_MENU]
 
-    def collect_links(self) -> dict:
-        links = {}
-        link_list = self._list_start_menu_items()
-        from json import dumps
-        print(dumps([link.to_dict() for link in link_list], indent=2))
-        return links
+    def collect_links(self) -> list:
+        start_menu_items = self._list_start_menu_items()
+        self._set_basic_tags(start_menu_items)
+        for i in start_menu_items:
+            if Tags.HIDDEN.value not in i.tags:
+                print(i)
+        return start_menu_items
 
     @staticmethod
     def _list_start_menu_items() -> list[Shortcut]:
@@ -71,7 +73,7 @@ class WindowsShortcutCollector(ShortcutCollector):
         return shortcut.Targetpath
 
     @staticmethod
-    def _clean_filter_links(link_list: list[tuple[str, str]]) -> list[tuple[str, str]]:
+    def _set_basic_tags(shortcuts: list[Shortcut]) -> None:
         path_filter = ["system32", "windows kits", "syswow64", "unins", "unin64"]
         extension_filter = [".url", ".txt", ".chm", ".ico"]
         path_rules = [
@@ -79,13 +81,7 @@ class WindowsShortcutCollector(ShortcutCollector):
             lambda path: any([path.lower().endswith(ext) for ext in extension_filter]),
             lambda path: "." not in path
         ]
-        cleaned_list = []
-        for name, path in link_list:
-            if not any([rule(path) for rule in path_rules]):
-                cleaned_list.append((name, path))
-        return cleaned_list
-
-
-if __name__ == "__main__":
-    w = WindowsShortcutCollector()
-    w.collect_links()
+        for shortcut in shortcuts:
+            shortcut.tags = [Tags.NEW.value]
+            if any([path_rule(shortcut.target_path) for path_rule in path_rules]):
+                shortcut.tags.append(Tags.HIDDEN.value)
