@@ -1,0 +1,14 @@
+Required Features:
+- icon grids with labels
+- spawnable windows displaying icon grids
+- drag and drop icon reorg
+- alphabetical icon reorg
+- tiling of the windows
+- reading start menu content
+- manual categorization for win
+- windows system apps has no path, fix this
+- reading start menu content for different linux distros
+- show/hide icons from the start menu
+- add custom icons
+- saving/loading icon visibility
+- saving/loading icon order

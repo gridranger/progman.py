@@ -11,5 +11,6 @@ class Language:
             "properties": "Properties",
             "run": "Run",
             "exit": "Exit"
-        }
+        },
+        "icon": {}
     }

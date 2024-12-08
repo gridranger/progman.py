@@ -1,15 +1,14 @@
 from abc import ABC, abstractmethod
 from tkinter import BaseWidget, StringVar
-from typing import Union
 
-from language import Language
-from theme import Theme
+from .language import Language
+from .theme import Theme
 
 
 class ProgmanWidget(ABC):
 
-    def __init__(self, lid: str, language: Language = None, theme: Theme = None):
-        self.master: Union[BaseWidget, ProgmanWidget]
+    def __init__(self, lid: str) -> None:
+        self.master: BaseWidget | ProgmanWidget
         self._lid = lid
         self._texts = {}
 
@@ -26,18 +25,18 @@ class ProgmanWidget(ABC):
     def theme(self) -> Theme:
         return self._theme if self.master is None else self.master.theme
 
-    def update_language(self):
+    def update_language(self) -> None:
         for key, value in self.language.content[self._lid].items():
             self._texts.setdefault(key, StringVar(self, "")).set(value)
 
     @abstractmethod
-    def update_theme(self):
+    def update_theme(self) -> None:
         for child in self.children:
             if isinstance(child, ProgmanWidget):
                 child.update_theme()
 
     @abstractmethod
-    def render(self):
+    def render(self) -> None:
         for child in self.children:
             if isinstance(child, ProgmanWidget):
                 child.render()
