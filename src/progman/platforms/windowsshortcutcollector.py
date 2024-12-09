@@ -19,9 +19,6 @@ class WindowsShortcutCollector(ShortcutCollector):
     def collect_links(self) -> list:
         start_menu_items = self._list_start_menu_items()
         self._set_basic_tags(start_menu_items)
-        for i in start_menu_items:
-            if Tags.HIDDEN.value not in i.tags:
-                print(i)
         return start_menu_items
 
     @staticmethod

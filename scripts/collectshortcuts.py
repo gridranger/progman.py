@@ -2,9 +2,13 @@ from collections import defaultdict
 from pathlib import Path
 
 from progman.platforms.windowsshortcutcollector import WindowsShortcutCollector
+from progman.tags import Tags
 
 w = WindowsShortcutCollector()
 links = w.collect_links()
+for i in links:
+    if Tags.HIDDEN.value not in i.tags:
+        print(f"{i.name:<55}", i.target_path)
 
 # icon_types = defaultdict(int)
 # for link in links:
