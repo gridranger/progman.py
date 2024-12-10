@@ -1,8 +1,8 @@
 from subprocess import Popen
 from tkinter import Event, Frame, Label, PhotoImage
 
-from progman.progmanwidget import ProgmanWidget
-from progman.shortcut import Shortcut
+from progman.core import Shortcut
+from progman.ui.progmanwidget import ProgmanWidget
 
 
 class IconWidget(Frame, ProgmanWidget):
@@ -55,20 +55,3 @@ class IconWidget(Frame, ProgmanWidget):
     def deselect(self) -> None:
         self._text_label.config(background=self.theme.background,
                                 foreground=self.theme.foreground)
-
-
-if __name__ == "__main__":
-    from tkinter import Tk
-
-    from progman.language import Language
-    from progman.shortcut import Shortcut
-    from progman.theme import Theme
-    t = Tk()
-    t.language = Language()
-    t.theme = Theme()
-    s = Shortcut("C:\\WINDOWS\\system32\\control.exe", "/name", "",
-                 r"C:\Users\bardo\repos\progman\src\progman\assets\progman.png", name="Settings")
-    i = IconWidget(s, t)
-    i.render()
-    i.grid(row=0, column=0)
-    t.mainloop()

@@ -1,8 +1,8 @@
-from collections import defaultdict
-from pathlib import Path
+# from collections import defaultdict
+# from pathlib import Path
 
 from progman.platforms.windowsshortcutcollector import WindowsShortcutCollector
-from progman.tags import Tags
+from progman.core import Tags
 
 w = WindowsShortcutCollector()
 links = w.collect_links()

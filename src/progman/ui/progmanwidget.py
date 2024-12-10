@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
 from tkinter import BaseWidget, StringVar
 
-from language import Language
-from theme import Theme
+from progman.core import Language, State, Theme
 
 
 class ProgmanWidget(ABC):
@@ -13,17 +12,21 @@ class ProgmanWidget(ABC):
         self._texts = {}
 
     @property
+    def state(self) -> State:
+        return self.master.state
+
+    @property
     def language(self) -> Language:
-        return self._language if self.master is None else self.master.language
+        return self.state.language
+
+    @property
+    def theme(self) -> Theme:
+        return self.state.theme
 
     def get_label(self, label: str) -> str:
         if not self._texts:
             self.update_language()
         return self._texts[label].get()
-
-    @property
-    def theme(self) -> Theme:
-        return self._theme if self.master is None else self.master.theme
 
     def update_language(self) -> None:
         for key, value in self.language.content[self._lid].items():

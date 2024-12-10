@@ -1,6 +1,6 @@
 from unittest.mock import Mock
 
-from progman.recognizer import Recognizer
+from progman.core import Recognizer
 
 
 class TestRecognizer:
@@ -37,3 +37,9 @@ class TestRecognizer:
         shortcut.name = "VSCode"
         self.test_object.categorize(shortcut)
         assert shortcut.tags == ["Development"]
+
+    def test_no_hints(self):
+        shortcut = Mock(target_path="c:/my/app.exe")
+        shortcut.name = "My App"
+        self.test_object.categorize(shortcut)
+        assert shortcut.tags == ["New"]

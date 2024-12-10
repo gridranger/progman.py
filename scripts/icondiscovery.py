@@ -1,10 +1,11 @@
 from pathlib import Path
 from tkinter import Tk, Label
-from winreg import OpenKey, HKEY_CLASSES_ROOT, QueryValue, QueryValueEx
+from winreg import OpenKey, HKEY_CLASSES_ROOT, QueryValueEx
 from PIL import Image
 from PIL.ImageTk import PhotoImage
 
 from progman.platforms.windowsiconloader import WindowsIconLoader
+
 
 def test_load_exe_and_dll():
     # Example usage
@@ -17,6 +18,7 @@ def test_load_exe_and_dll():
     label.pack(pady=20, padx=20)
     root.mainloop()
 
+
 def test_load_ico_and_multi_ico():
     root = Tk()
     root.title("Display Icon")
@@ -25,6 +27,7 @@ def test_load_ico_and_multi_ico():
     label = Label(root, image=icon)
     label.pack(pady=20, padx=20)
     root.mainloop()
+
 
 def get_default_app(path: str):
     extension = Path(path).suffix

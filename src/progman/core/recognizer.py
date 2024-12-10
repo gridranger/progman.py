@@ -1,6 +1,7 @@
 from .shortcut import Shortcut
 from .tags import Tags
 
+
 class Recognizer:
     negative_name_hints = [
         "About Java", "App Recovery",
@@ -87,21 +88,23 @@ class Recognizer:
         ]
     }
 
-    def categorize(self, shortcut: Shortcut):
-        if any([name_part in shortcut.name for name_part in self.negative_name_hints]):
+    @classmethod
+    def categorize(cls, shortcut: Shortcut) -> None:
+        if any([name_part in shortcut.name for name_part in cls.negative_name_hints]):
             shortcut.tags = [Tags.HIDDEN.value]
             return
-        if any([shortcut.target_path.lower().endswith(extension) for extension in self.negative_extension_filter]):
+        if any([shortcut.target_path.lower().endswith(extension) for extension in cls.negative_extension_filter]):
             shortcut.tags = [Tags.HIDDEN.value]
             return
-        if any([path_part in shortcut.target_path.lower() for path_part in self.negative_path_hints]):
+        if any([path_part in shortcut.target_path.lower() for path_part in cls.negative_path_hints]):
             shortcut.tags = [Tags.HIDDEN.value]
             return
-        for tag, path_hint_list in self.path_hints.items():
+        for tag, path_hint_list in cls.path_hints.items():
             if any([path_hint in shortcut.target_path for path_hint in path_hint_list]):
                 shortcut.tags = [tag.value]
                 return
-        for tag, name_hint_list in self.name_hints.items():
+        for tag, name_hint_list in cls.name_hints.items():
             if any([name_hint in shortcut.name for name_hint in name_hint_list]):
                 shortcut.tags = [tag.value]
                 return
+        shortcut.tags = [Tags.NEW.value]

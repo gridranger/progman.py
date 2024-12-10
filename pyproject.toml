@@ -18,7 +18,7 @@ linux = []
 [tool.flake8]
 count = true
 exclude = [".venv"]
-ignore = ["E501"]
+ignore = ["E501", "W504"]
 max-complexity = 10
 
 [tool.pytest.ini_options]
@@ -29,5 +29,5 @@ testpaths = ["test"]
 [tool.ruff]
 exclude = [".venv"]
 lint.ignore = ["E501"]
-lint.select = ["E", "F", "W", "C901", "I", "N", "UP", "YTT", "ANN", "SLF", "RET", "TC", "PTH", "TD"]
+lint.select = ["E", "F", "W", "C901", "I", "N", "UP", "YTT", "ANN", "SLF", "RET", "TC", "PTH"]
 preview = true

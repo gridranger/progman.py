@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Tags(Enum):
     ACCESSORIES = "Accessories"
     CREATIVITY = "Creativity"
@@ -13,4 +14,3 @@ class Tags(Enum):
     OFFICE = "Office"
     MICROSOFT_SOLUTION_SERIES = "Microsoft Solution Series"
     # if you know what's this above then you was around the early nineties ;)
-

@@ -1,20 +1,23 @@
 from tkinter import Tk
 
-from assets import asset_storage
-from language import Language
-from progmanwidget import ProgmanWidget
-from menubar import Menubar
-from theme import Theme
+from progman.assets import asset_storage
+from progman.core import State
 
+from .menubar import Menubar
+from .progmanwidget import ProgmanWidget
 
 
 class MainWindow(Tk, ProgmanWidget):
 
-    def __init__(self, language: Language, theme: Theme) -> None:
+    def __init__(self, state: State) -> None:
         Tk.__init__(self)
-        self._language = language
-        self._theme = theme
+        self._state = state
         ProgmanWidget.__init__(self, "root")
+        self._icon = None
+
+    @property
+    def state(self) -> State:
+        return self._state
 
     def render(self) -> None:
         self._set_title()

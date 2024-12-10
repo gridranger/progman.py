@@ -1,15 +1,15 @@
-from functools import cache
 from pathlib import Path
+from winreg import HKEY_CLASSES_ROOT, OpenKey, QueryValueEx
+
 from PIL import Image, ImageTk
 from PIL.ImageTk import PhotoImage
 from win32api import GetSystemMetrics
 from win32con import SM_CXICON
 from win32gui import DestroyIcon, ExtractIconEx, GetDC
 from win32ui import CreateBitmap, CreateDCFromHandle
-from winreg import HKEY_CLASSES_ROOT, OpenKey, QueryValueEx
 
-from ..assets import asset_storage
-from ..shortcut import Shortcut
+from progman.assets import asset_storage
+from progman.core import Shortcut
 
 
 class WindowsIconLoader:
@@ -33,9 +33,9 @@ class WindowsIconLoader:
 
     @staticmethod
     def _load_from_exe(path: str, icon_index: int) -> PhotoImage:
-        cache = asset_storage.get_icon(path, icon_index)
-        if cache:
-            return cache
+        image_cache = asset_storage.get_icon(path, icon_index)
+        if image_cache:
+            return image_cache
         size = GetSystemMetrics(SM_CXICON)
         normal, _ = ExtractIconEx(path, icon_index)
         DestroyIcon(_[0])
@@ -56,20 +56,21 @@ class WindowsIconLoader:
 
     @staticmethod
     def _load_from_ico(path: str, icon_index: int = 0) -> PhotoImage:
-        cache = asset_storage.get_icon(path, icon_index)
-        if cache:
-            return cache
+        image_cache = asset_storage.get_icon(path, icon_index)
+        if image_cache:
+            return image_cache
         image = Image.open(path)
         resized_image = image.resize((32, 32))
         icon = PhotoImage(resized_image)
         asset_storage.store_icon(path, icon_index, icon)
         return icon
 
-    def _load_icon_from_default_app(self, path: str, icon_index: int) -> PhotoImage:
+    @classmethod
+    def _load_icon_from_default_app(cls, path: str, icon_index: int) -> PhotoImage:
         extension = Path(path).suffix
-        cache = asset_storage.get_icon(extension, icon_index)
-        if cache:
-            return cache
+        image_cache = asset_storage.get_icon(extension, icon_index)
+        if image_cache:
+            return image_cache
         with OpenKey(HKEY_CLASSES_ROOT, extension) as key:
             prog_id, _ = QueryValueEx(key, "")
         with OpenKey(HKEY_CLASSES_ROOT, prog_id) as prog_id_key:
@@ -77,7 +78,7 @@ class WindowsIconLoader:
                 with OpenKey(prog_id_key, "DefaultIcon") as icon_key:
                     icon_path, _ = QueryValueEx(icon_key, "")
                     file, icon_id = icon_path.split(",")
-                    loaded_icon = WindowsIconLoader()._load_from_exe(file, int(icon_id))
+                    loaded_icon = cls._load_from_exe(file, int(icon_id))
                     asset_storage.store_icon(extension, icon_index, loaded_icon)
                     return loaded_icon
             except FileNotFoundError:
