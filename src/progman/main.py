@@ -25,7 +25,6 @@ class ProgramManager:
         else:
             self._load_saved_state()
             self._update_state()
-        self._set_state()
 
     def _load_saved_state(self) -> None:
         pass  # TODO
