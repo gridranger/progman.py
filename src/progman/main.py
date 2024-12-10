@@ -18,8 +18,8 @@ class ProgramManager:
 
     def _load_content(self) -> None:
         if self._is_first_run:
-            self._shortcuts = ShortcutCollector().collect_links()
-            for shortcut in self._shortcuts:
+            self.state.shortcuts = ShortcutCollector().collect_links()
+            for shortcut in self.state.shortcuts:
                 Recognizer.categorize(shortcut)
                 self.state.groups.update(shortcut.tags)
         else:
