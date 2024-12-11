@@ -1,5 +1,5 @@
 from .assethandler import AssetHandler as _AssetHandler
 
-assets = _AssetHandler()
+asset_storage = _AssetHandler()
 
-__all__ = ["assets"]
+__all__ = ["asset_storage"]

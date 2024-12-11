@@ -1,0 +1,33 @@
+[project]
+name = "progman.py"
+version = "0.2.0"
+authors = [{name = "Dávid Bárdos", email = "bardos.david@gmail.com"}]
+description = "Platform independent launcher inspired by progman.exe from Windows 3.1."
+readme = "README.md"
+license = {file = "LICENSE"}
+dependencies = ["pillow"]
+requires-python = ">= 3.12"
+
+[project.urls]
+Repository = "https://github.com/gridranger/progman.py"
+
+[project.optional-dependencies]
+win = ["pywin32", "pefile"]
+linux = []
+
+[tool.flake8]
+count = true
+exclude = [".venv"]
+ignore = ["E501", "W504"]
+max-complexity = 10
+
+[tool.pytest.ini_options]
+addopts = "--cov=progman --cov-report=term-missing:skip-covered"
+pythonpath = ["src"]
+testpaths = ["test"]
+
+[tool.ruff]
+exclude = [".venv"]
+lint.ignore = ["E501"]
+lint.select = ["E", "F", "W", "C901", "I", "N", "UP", "YTT", "ANN", "SLF", "RET", "TC", "PTH"]
+preview = true
