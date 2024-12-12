@@ -40,6 +40,6 @@ class ProgmanWidget(ABC):
 
     @abstractmethod
     def render(self) -> None:
-        for child in self.children:
+        for child in self.children.values():
             if isinstance(child, ProgmanWidget):
                 child.render()
