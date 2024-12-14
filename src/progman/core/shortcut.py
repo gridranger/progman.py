@@ -7,7 +7,8 @@ class Shortcut:
     target_path: str
     arguments: str
     workdir_path: str
-    icon_path: str
+    separate_icon_path: str
+    icon_index: int = 0
     name: str = ""
     link_path: str = ""
     description: str = ""
@@ -21,6 +22,10 @@ class Shortcut:
                 self.name = Path(self.link_path).stem
             else:
                 self.name = Path(self.target_path).stem
+
+    @property
+    def icon(self) -> str:
+        return self.separate_icon_path or self.target_path
 
     @property
     def launch_command(self) -> list[str]:

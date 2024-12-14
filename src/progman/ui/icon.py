@@ -3,23 +3,26 @@ from tkinter import Event, Frame, Label, PhotoImage
 
 from progman.core import Shortcut
 from progman.ui.progmanwidget import ProgmanWidget
+from ..platforms import IconLoader
 
 
 class IconWidget(Frame, ProgmanWidget):
+    WIDTH = 84
+    HEIGHT = 76
 
     def __init__(self, shortcut: Shortcut, *args: any, **kwargs: any) -> None:
-        Frame.__init__(self, *args, **kwargs, width=84, height=76, cursor="hand2")
+        Frame.__init__(self, *args, **kwargs, width=self.WIDTH, height=self.HEIGHT, cursor="hand2")
         ProgmanWidget.__init__(self, 'icon')
         self.configure(background=self.theme.background)
         self._shortcut = shortcut
-        self._icon: PhotoImage | None = None
+        self._icon = None
         self._icon_label: Label | None = None
         self._text_label: Label | None = None
 
     @property
     def icon(self) -> PhotoImage:
         if self._icon is None:
-            self._icon = PhotoImage(file=self._shortcut.icon_path)
+            self._icon = IconLoader.load(self._shortcut)
         return self._icon
 
     def update_theme(self) -> None:
