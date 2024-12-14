@@ -12,5 +12,6 @@ class Language:
             "run": "Run",
             "exit": "Exit"
         },
-        "icon": {}
+        "icon": {},
+        "icon_drawer": {}
     }
