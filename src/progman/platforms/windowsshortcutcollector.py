@@ -21,7 +21,7 @@ class WindowsShortcutCollector(ShortcutCollector):
 
     @staticmethod
     def _list_start_menu_items() -> list[Shortcut]:
-        shortcuts = []
+        shortcuts = set()
         shell = Dispatch("WScript.Shell")
         for start_menu_path in WindowsShortcutCollector.START_MENU_PATHS:
             if Path.exists(start_menu_path):
@@ -31,8 +31,10 @@ class WindowsShortcutCollector(ShortcutCollector):
                             shortcut_path = Path(root, file)
                             shortcut = shell.CreateShortcut(str(shortcut_path))
                             common_shortcut = WindowsShortcutCollector._covert_shortcut(shortcut)
-                            shortcuts.append(common_shortcut)
-        return shortcuts
+                            shortcuts.add(common_shortcut)
+        shortcut_list = list(shortcuts)
+        shortcut_list.sort(key=lambda item: item.name)
+        return shortcut_list
 
     @staticmethod
     def _covert_shortcut(platform_dependent_shortcut: any) -> Shortcut:
