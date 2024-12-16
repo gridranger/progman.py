@@ -1,10 +1,9 @@
-from abc import ABC, abstractmethod
-from tkinter import BaseWidget, StringVar
+from tkinter import BaseWidget, Frame, StringVar, Canvas
 
 from progman.core import Language, State, Theme
 
 
-class ProgmanWidget(ABC):
+class ProgmanWidget:
 
     def __init__(self, lid: str) -> None:
         self.master: BaseWidget | ProgmanWidget
@@ -32,14 +31,20 @@ class ProgmanWidget(ABC):
         for key, value in self.language.content[self._lid].items():
             self._texts.setdefault(key, StringVar(self, "")).set(value)
 
-    @abstractmethod
     def update_theme(self) -> None:
         for child in self.children:
             if isinstance(child, ProgmanWidget):
                 child.update_theme()
 
-    @abstractmethod
     def render(self) -> None:
         for child in self.children.values():
             if isinstance(child, ProgmanWidget):
                 child.render()
+
+
+class ProgmanFrame(Frame, ProgmanWidget):
+    pass
+
+
+class ProgmanCanvas(Canvas, ProgmanWidget):
+    pass

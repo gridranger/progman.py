@@ -5,7 +5,7 @@ from progman.core import State
 
 from .icondrawer import IconDrawer
 from .menubar import Menubar
-from .progmanwidget import ProgmanWidget
+from .progmanwidgets import ProgmanWidget
 
 
 class MainWindow(Tk, ProgmanWidget):
@@ -48,7 +48,7 @@ class MainWindow(Tk, ProgmanWidget):
     def _render_drawer(self) -> None:
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
-        self._icon_drawer = IconDrawer()
+        self._icon_drawer = IconDrawer(self)
 
     def _set_title(self, *_args: any) -> None:
         self.title(self.get_label("title"))

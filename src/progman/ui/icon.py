@@ -2,7 +2,7 @@ from subprocess import Popen
 from tkinter import Event, Frame, Label, PhotoImage
 
 from progman.core import Shortcut
-from progman.ui.progmanwidget import ProgmanWidget
+from progman.ui.progmanwidgets import ProgmanWidget
 from ..platforms import IconLoader
 
 
@@ -41,6 +41,9 @@ class IconWidget(Frame, ProgmanWidget):
         self._text_label.bind("<Button-1>", self.on_click)
         self._icon_label.grid(row=0, column=0, padx=26, pady=0)
         self._text_label.grid(row=1, column=0, pady=(0, 10), padx=10)
+        for widget in [self, self._icon_label, self._text_label]:
+            widget.bind("<Enter>", self.master.on_enter)
+            widget.bind("<Leave>", self.master.on_leave)
 
     def rename(self, new_name: str) -> None:
         self._shortcut.name = new_name
