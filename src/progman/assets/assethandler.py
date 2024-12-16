@@ -32,7 +32,7 @@ class AssetHandler:
 
     def store_icon(self, key: str, icon_id: int, image: PhotoImage) -> None:
         key = f"{key}-{icon_id}"
-        if self._content[key]:
+        if self._content.get(key):
             raise ResourceDuplicationError("No resource should be loaded twice!")
         self._content[key] = image
 

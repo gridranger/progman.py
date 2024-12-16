@@ -8,7 +8,7 @@ w = WindowsShortcutCollector()
 links = w.collect_links()
 for i in links:
     if Tags.HIDDEN.value not in i.tags:
-        print(f"{i.name:<55}", i.target_path)
+        print(f"{i.name:<55}{i.target_path:<95}{i.separate_icon_path:<100}")
 
 # icon_types = defaultdict(int)
 # for link in links:

@@ -14,21 +14,15 @@ from progman.core import Shortcut
 
 class WindowsIconLoader:
 
-    def load(self, shortcut: Shortcut) -> PhotoImage:
-        cleaned_icon_path = ""
-        icon_index = 0
-        if "," in shortcut.icon_path:
-            cleaned_icon_path = shortcut.icon_path.split(",")[0]
-            icon_index = int(shortcut.icon_path.split(",")[1])
-        if not cleaned_icon_path:
-            cleaned_icon_path = shortcut.icon_path or shortcut.target_path
-        path = Path(cleaned_icon_path)
-        extension = path.suffix.lower()
+    @classmethod
+    def load(cls, shortcut: Shortcut) -> PhotoImage:
+        path = Path(shortcut.icon)
+        extension = path.suffix.lower()[1:]
         resolver_name = f"_load_from_{extension}"
-        if hasattr(self, resolver_name):
-            result = getattr(self, resolver_name)(cleaned_icon_path, icon_index)
+        if hasattr(cls, resolver_name):
+            result = getattr(cls, resolver_name)(shortcut.icon, shortcut.icon_index)
         else:
-            result = self._load_icon_from_default_app(cleaned_icon_path, icon_index)
+            result = cls._load_icon_from_default_app(shortcut.icon, shortcut.icon_index)
         return result
 
     @staticmethod
@@ -51,8 +45,9 @@ class WindowsIconLoader:
         asset_storage.store_icon(path, icon_index, icon)
         return icon
 
-    def _load_from_dll(self, path: str, icon_index: int = 0) -> PhotoImage:
-        return self._load_from_exe(path, icon_index)
+    @classmethod
+    def _load_from_dll(cls, path: str, icon_index: int = 0) -> PhotoImage:
+        return cls._load_from_exe(path, icon_index)
 
     @staticmethod
     def _load_from_ico(path: str, icon_index: int = 0) -> PhotoImage:
@@ -77,7 +72,12 @@ class WindowsIconLoader:
             try:
                 with OpenKey(prog_id_key, "DefaultIcon") as icon_key:
                     icon_path, _ = QueryValueEx(icon_key, "")
-                    file, icon_id = icon_path.split(",")
+                    if ',' in icon_path:
+                        file, icon_id = icon_path.split(",")
+                    else:
+                        file = icon_path
+                        icon_id = 0
+                    file = file.replace("%1", path)
                     loaded_icon = cls._load_from_exe(file, int(icon_id))
                     asset_storage.store_icon(extension, icon_index, loaded_icon)
                     return loaded_icon

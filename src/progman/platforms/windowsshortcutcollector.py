@@ -40,12 +40,19 @@ class WindowsShortcutCollector(ShortcutCollector):
             description = platform_dependent_shortcut.Description
         except com_error:
             description = ""
+        raw_icon_path = WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.IconLocation)
+        if ',' in raw_icon_path:
+            icon_path, _, icon_index = raw_icon_path.partition(',')
+            icon_index = int(icon_index)
+        else:
+            icon_path = raw_icon_path
+            icon_index = 0
         return Shortcut(
             arguments=platform_dependent_shortcut.Arguments,
             description=description,
             link_path=WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.FullName),
             hotkey=platform_dependent_shortcut.Hotkey,
-            icon_path=WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.IconLocation),
+            separate_icon_path=icon_path, icon_index=icon_index,
             target_path=WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.TargetPath),
             workdir_path=WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.WorkingDirectory)
         )
