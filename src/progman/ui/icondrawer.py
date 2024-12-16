@@ -40,7 +40,7 @@ class IconDrawer(ScrollFrame, ProgmanWidget):
 
     def _update_scrollbar(self) -> None:
         last_icon = list(self.viewPort.children.values())[-1]
-        if last_icon.winfo_y() > self.winfo_height():
+        if last_icon.winfo_y() + IconWidget.HEIGHT > self.winfo_height():
             self._place_scrollbar()
         else:
             self.vsb.grid_forget()
