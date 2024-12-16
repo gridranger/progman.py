@@ -36,5 +36,5 @@ class Shortcut:
                 self.arguments == other.arguments and
                 self.workdir_path == other.workdir_path)
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.target_path + self.arguments + self.workdir_path)

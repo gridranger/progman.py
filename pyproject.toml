@@ -27,7 +27,7 @@ pythonpath = ["src"]
 testpaths = ["test"]
 
 [tool.ruff]
-exclude = [".venv"]
+exclude = [".venv", "scripts"]
 lint.ignore = ["E501"]
 lint.select = ["E", "F", "W", "C901", "I", "N", "UP", "YTT", "ANN", "SLF", "RET", "TC", "PTH"]
 preview = true

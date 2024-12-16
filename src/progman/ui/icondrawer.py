@@ -5,10 +5,10 @@ from .scrollframe import ScrollFrame
 
 class IconDrawer(ScrollFrame, ProgmanWidget):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: any, **kwargs: any) -> None:
         ScrollFrame.__init__(self, *args, **kwargs)
         ProgmanWidget.__init__(self, "icon_drawer")
-        self._icons: list[IconWidget]  = []
+        self._icons: list[IconWidget] = []
         self.viewPort.on_enter = self.on_enter
         self.viewPort.on_leave = self.on_leave
 
@@ -25,7 +25,7 @@ class IconDrawer(ScrollFrame, ProgmanWidget):
         self.update_theme()
         self._arrange_icons()
 
-    def _arrange_icons(self):
+    def _arrange_icons(self) -> None:
         max_columns = self.master.winfo_width() // IconWidget.WIDTH
         for index, icon in enumerate(self._icons):
             row = index // max_columns

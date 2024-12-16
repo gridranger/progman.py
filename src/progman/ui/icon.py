@@ -3,6 +3,7 @@ from tkinter import Event, Frame, Label, PhotoImage
 
 from progman.core import Shortcut
 from progman.ui.progmanwidgets import ProgmanWidget
+
 from ..platforms import IconLoader
 
 

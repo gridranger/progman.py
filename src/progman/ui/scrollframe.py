@@ -6,7 +6,7 @@
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 from platform import system
-from tkinter import Scrollbar, Event, Tk
+from tkinter import Event, Scrollbar, Tk
 
 from .progmanwidgets import ProgmanCanvas, ProgmanFrame
 

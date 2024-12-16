@@ -1,4 +1,4 @@
-from tkinter import BaseWidget, Frame, StringVar, Canvas
+from tkinter import BaseWidget, Canvas, Frame, StringVar
 
 from progman.core import Language, State, Theme
 

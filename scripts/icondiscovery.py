@@ -1,13 +1,14 @@
 from pathlib import Path
-from tkinter import Tk, Label
-from winreg import OpenKey, HKEY_CLASSES_ROOT, QueryValueEx
+from tkinter import Label, Tk
+from winreg import HKEY_CLASSES_ROOT, OpenKey, QueryValueEx
+
 from PIL import Image
 from PIL.ImageTk import PhotoImage
 
 from progman.platforms.windowsiconloader import WindowsIconLoader
 
 
-def test_load_exe_and_dll():
+def test_load_exe_and_dll() -> None:
     # Example usage
     root = Tk()
     root.title("Display Icon")
@@ -19,7 +20,7 @@ def test_load_exe_and_dll():
     root.mainloop()
 
 
-def test_load_ico_and_multi_ico():
+def test_load_ico_and_multi_ico() -> None:
     root = Tk()
     root.title("Display Icon")
     ico_path = r"C:\Program Files\Git\mingw64\share\git\git-for-windows.ico"
@@ -29,7 +30,7 @@ def test_load_ico_and_multi_ico():
     root.mainloop()
 
 
-def get_default_app(path: str):
+def get_default_app(path: str) -> None:
     extension = Path(path).suffix
     with OpenKey(HKEY_CLASSES_ROOT, extension) as key:
         prog_id, _ = QueryValueEx(key, "")
@@ -44,7 +45,7 @@ def get_default_app(path: str):
             return PhotoImage(Image.open(r"C:\Users\bardo\repos\progman\src\progman\assets\blank.png"))
 
 
-def test_load_txt():
+def test_load_txt() -> None:
     root = Tk()
     root.title("Display Icon")
     path = r"C:\Users\bardo\OneDrive\Desktop\foo.txt"

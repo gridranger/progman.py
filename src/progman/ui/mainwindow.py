@@ -1,4 +1,4 @@
-from tkinter import Tk, Event
+from tkinter import Event, Tk
 
 from progman.assets import asset_storage
 from progman.core import State
