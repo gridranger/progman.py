@@ -1,3 +1,5 @@
+from tkinter import Misc
+
 from .icon import IconWidget
 from .progmanwidgets import ProgmanWidget
 from .scrollframe import ScrollFrame
@@ -5,10 +7,11 @@ from .scrollframe import ScrollFrame
 
 class IconDrawer(ScrollFrame, ProgmanWidget):
 
-    def __init__(self, *args: any, **kwargs: any) -> None:
-        ScrollFrame.__init__(self, *args, **kwargs)
+    def __init__(self, parent: Misc | None, category: str, *args: any, **kwargs: any) -> None:
+        ScrollFrame.__init__(self, parent, *args, **kwargs)
         ProgmanWidget.__init__(self, "icon_drawer")
         self._icons: list[IconWidget] = []
+        self._category = category
         self.viewPort.on_enter = self.on_enter
         self.viewPort.on_leave = self.on_leave
 
@@ -17,13 +20,16 @@ class IconDrawer(ScrollFrame, ProgmanWidget):
         ProgmanWidget.update_theme(self)
 
     def render(self) -> None:
-        for shortcut in self.state.shortcuts:
-            if "Development" in shortcut.tags:
-                self._icons.append(IconWidget(shortcut, self.viewPort))
+        self._render_icons()
         self.grid(row=0, column=0, sticky="nesw")
         ProgmanWidget.render(self)
         self.update_theme()
         self._arrange_icons()
+
+    def _render_icons(self):
+        for shortcut in self.state.shortcuts:
+            if self._category in shortcut.tags:
+                self._icons.append(IconWidget(shortcut, self.viewPort))
 
     def _arrange_icons(self) -> None:
         max_columns = self.master.winfo_width() // IconWidget.WIDTH

@@ -48,7 +48,7 @@ class MainWindow(Tk, ProgmanWidget):
     def _render_drawer(self) -> None:
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
-        self._icon_drawer = IconDrawer(self)
+        self._icon_drawer = IconDrawer(self, "Accessories")
 
     def _set_title(self, *_args: any) -> None:
         self.title(self.get_label("title"))

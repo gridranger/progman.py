@@ -1,6 +1,5 @@
-from platforms import ShortcutCollector
-
 from progman.core import Recognizer, State
+from progman.platforms import ShortcutCollector
 from progman.ui.mainwindow import MainWindow
 
 

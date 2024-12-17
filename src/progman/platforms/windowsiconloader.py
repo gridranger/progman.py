@@ -32,7 +32,8 @@ class WindowsIconLoader:
             return image_cache
         size = GetSystemMetrics(SM_CXICON)
         normal, _ = ExtractIconEx(path, icon_index)
-        DestroyIcon(_[0])
+        if _:
+            DestroyIcon(_[0])
         device_context = CreateDCFromHandle(GetDC(0))
         bitmap = CreateBitmap()
         bitmap.CreateCompatibleBitmap(device_context, size, size)
