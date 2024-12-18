@@ -1,30 +1,34 @@
-from subprocess import Popen
+from abc import ABC, abstractmethod, abstractproperty
 from tkinter import Event, Frame, Label, PhotoImage
 
-from progman.core import Shortcut
 from progman.ui.progmanwidgets import ProgmanWidget
 
-from ..platforms import IconLoader
 
-
-class IconWidget(Frame, ProgmanWidget):
+class Icon(Frame, ProgmanWidget):
     WIDTH = 84
     HEIGHT = 76
 
-    def __init__(self, shortcut: Shortcut, *args: any, **kwargs: any) -> None:
+    def __init__(self, *args: any, **kwargs: any) -> None:
         Frame.__init__(self, *args, **kwargs, width=self.WIDTH, height=self.HEIGHT, cursor="hand2")
         ProgmanWidget.__init__(self, 'icon')
         self.configure(background=self.theme.background)
-        self._shortcut = shortcut
         self._icon = None
         self._icon_label: Label | None = None
         self._text_label: Label | None = None
 
+    @abstractproperty
     @property
     def icon(self) -> PhotoImage:
-        if self._icon is None:
-            self._icon = IconLoader.load(self._shortcut)
-        return self._icon
+        pass
+
+    @abstractproperty
+    @property
+    def _name(self) -> str:
+        pass
+    
+    @abstractmethod
+    def _launch(self) -> None:
+        pass
 
     def update_theme(self) -> None:
         ProgmanWidget.update_theme(self)
@@ -36,7 +40,7 @@ class IconWidget(Frame, ProgmanWidget):
         ProgmanWidget.render(self)
         self.grid_propagate(False)
         self._icon_label = Label(self, image=self.icon, justify="center", bg=self.theme.background)
-        self._text_label = Label(self, text=self._shortcut.name, wraplength=84, justify="center",
+        self._text_label = Label(self, text=self._name, wraplength=84, justify="center",
                                  bg=self.theme.background)
         self._icon_label.bind("<Button-1>", self.on_click)
         self._text_label.bind("<Button-1>", self.on_click)
@@ -46,13 +50,9 @@ class IconWidget(Frame, ProgmanWidget):
             widget.bind("<Enter>", self.master.on_enter)
             widget.bind("<Leave>", self.master.on_leave)
 
-    def rename(self, new_name: str) -> None:
-        self._shortcut.name = new_name
-        self._text_label.configure(text=new_name)
-
     def on_click(self, _event: Event | None = None) -> None:
         self.select()
-        Popen(self._shortcut.launch_command)
+        self._launch()
         self.after(100, self.deselect)
 
     def select(self) -> None:

@@ -3,7 +3,7 @@ from tkinter import Event, Tk
 from progman.assets import asset_storage
 from progman.core import State
 
-from .icondrawer import IconDrawer
+from .appdrawer import AppDrawer
 from .menubar import Menubar
 from .progmanwidgets import ProgmanWidget
 
@@ -48,7 +48,7 @@ class MainWindow(Tk, ProgmanWidget):
     def _render_drawer(self) -> None:
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
-        self._icon_drawer = IconDrawer(self, "Accessories")
+        self._icon_drawer = AppDrawer(self, "Accessories")
 
     def _set_title(self, *_args: any) -> None:
         self.title(self.get_label("title"))
