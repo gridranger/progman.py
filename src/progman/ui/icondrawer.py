@@ -27,7 +27,7 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
         self._arrange_icons()
 
     @abstractmethod
-    def _render_icons(self):
+    def _render_icons(self) -> None:
         """Overwrite this."""
         raise NotImplementedError("Implement this to make this work.")
 

@@ -16,8 +16,8 @@ from .progmanwidgets import ProgmanCanvas, ProgmanFrame
 # ************************
 class ScrollFrame(ProgmanFrame):
 
-    def __init__(self, parent: Tk) -> None:
-        ProgmanFrame.__init__(self, parent)  # create a frame (self)
+    def __init__(self, parent: Tk, *args: any, **kwargs: any) -> None:
+        ProgmanFrame.__init__(self, parent, *args, **kwargs)  # create a frame (self)
         self.canvas = ProgmanCanvas(self, borderwidth=0, background="#ffffff")  # place canvas on self
         self.viewPort = ProgmanFrame(self.canvas, background="#ffffff")  # place a frame on the canvas, this frame will hold the child widgets
         self.vsb = Scrollbar(parent, orient="vertical", command=self.canvas.yview)  # place a scrollbar on self
@@ -28,7 +28,7 @@ class ScrollFrame(ProgmanFrame):
         self.viewPort.bind("<Configure>", self._on_frame_configure)  # bind an event whenever the size of the viewPort frame changes.
         self.canvas.bind("<Configure>", self._on_canvas_configure)  # bind an event whenever the size of the canvas frame changes.
         self.viewPort.bind('<Enter>', self.on_enter)  # bind wheel events when the cursor enters the control
-        self.viewPort.bind('<Leave>', self.on_leave)  # unbind wheel events when the cursorl leaves the control
+        self.viewPort.bind('<Leave>', self.on_leave)  # unbind wheel events when the cursor leaves the control
         self._on_frame_configure(None)  # perform an initial stretch on render, otherwise the scroll region has a tiny border until the first resize
 
     def _place_scrollbar(self) -> None:
@@ -44,7 +44,7 @@ class ScrollFrame(ProgmanFrame):
         canvas_width = event.width
         self.canvas.itemconfig(self.canvas_window, width=canvas_width)  # whenever the size of the canvas changes alter the window region respectively.
 
-    def _on_mouse_wheel(self, event: Event) -> None:  # cross platform scroll wheel event
+    def _on_mouse_wheel(self, event: Event) -> None:  # cross-platform scroll wheel event
         if system() == 'Windows':
             self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
         elif system() == 'Darwin':
@@ -62,7 +62,7 @@ class ScrollFrame(ProgmanFrame):
         else:
             self.canvas.bind_all("<MouseWheel>", self._on_mouse_wheel)
 
-    def on_leave(self, _event: Event) -> None:  # unbind wheel events when the cursorl leaves the control
+    def on_leave(self, _event: Event) -> None:  # unbind wheel events when the cursor leaves the control
         if system() == 'Linux':
             self.canvas.unbind_all("<Button-4>")
             self.canvas.unbind_all("<Button-5>")

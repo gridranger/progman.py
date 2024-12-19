@@ -1,3 +1,6 @@
+import sys
+sys.path.append(r"C:\Users\bardo\repos\progman\src")
+
 from pathlib import Path
 from tkinter import Label, Tk
 from winreg import HKEY_CLASSES_ROOT, OpenKey, QueryValueEx
@@ -53,3 +56,15 @@ def test_load_txt() -> None:
     label = Label(root, image=icon)
     label.pack(pady=20, padx=20)
     root.mainloop()
+
+def test_load_ico() -> None:
+    root = Tk()
+    root.title("Display Icon")
+    icon = WindowsIconLoader()._load_from_exe(r'C:\\Program Files\\7-Zip\\7zFM.exe', 0)
+    label = Label(root, image=icon)
+    label.pack(pady=20, padx=20)
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    test_load_ico()

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from progman.core import Shortcut
+from ..core import Shortcut
 
 
 class ShortcutCollector(ABC):

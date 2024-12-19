@@ -1,10 +1,10 @@
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 from tkinter import Event, Frame, Label, PhotoImage
 
 from progman.ui.progmanwidgets import ProgmanWidget
 
 
-class Icon(Frame, ProgmanWidget):
+class Icon(ABC, Frame, ProgmanWidget):
     WIDTH = 84
     HEIGHT = 76
 
@@ -16,16 +16,16 @@ class Icon(Frame, ProgmanWidget):
         self._icon_label: Label | None = None
         self._text_label: Label | None = None
 
-    @abstractproperty
     @property
+    @abstractmethod
     def icon(self) -> PhotoImage:
         pass
 
-    @abstractproperty
     @property
-    def _name(self) -> str:
+    @abstractmethod
+    def _label(self) -> str:
         pass
-    
+
     @abstractmethod
     def _launch(self) -> None:
         pass
@@ -40,7 +40,7 @@ class Icon(Frame, ProgmanWidget):
         ProgmanWidget.render(self)
         self.grid_propagate(False)
         self._icon_label = Label(self, image=self.icon, justify="center", bg=self.theme.background)
-        self._text_label = Label(self, text=self._name, wraplength=84, justify="center",
+        self._text_label = Label(self, text=self._label, wraplength=84, justify="center",
                                  bg=self.theme.background)
         self._icon_label.bind("<Button-1>", self.on_click)
         self._text_label.bind("<Button-1>", self.on_click)

@@ -20,7 +20,6 @@ class ProgramManager:
             self.state.shortcuts = ShortcutCollector().collect_links()
             for shortcut in self.state.shortcuts:
                 Recognizer.categorize(shortcut)
-                self.state.groups.update(shortcut.tags)
         else:
             self._load_saved_state()
             self._update_state()

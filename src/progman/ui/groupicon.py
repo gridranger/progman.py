@@ -1,9 +1,7 @@
 from tkinter import PhotoImage
 
-from progman.core import Shortcut
-
+from ..assets import asset_storage
 from .icon import Icon
-from ..platforms import IconLoader
 
 
 class GroupIcon(Icon):
@@ -11,14 +9,17 @@ class GroupIcon(Icon):
     def __init__(self, group_name: str, *args: any, **kwargs: any) -> None:
         Icon.__init__(self, *args, **kwargs)
         self._group_name = group_name
-    
-    @property
-    def icon(self) -> PhotoImage:
-        pass
 
     @property
-    def _name(self) -> str:
+    def icon(self) -> PhotoImage:
+        return asset_storage["group"]
+
+    @property
+    def _label(self) -> str:
         return self._group_name
-    
+
     def _launch(self) -> None:
-        pass
+        if self.state.groups[self._group_name].is_collapsed:
+            pass
+        else:
+            pass

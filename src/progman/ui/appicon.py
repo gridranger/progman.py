@@ -3,8 +3,8 @@ from tkinter import PhotoImage
 
 from progman.core import Shortcut
 
-from .icon import Icon
 from ..platforms import IconLoader
+from .icon import Icon
 
 
 class AppIcon(Icon):
@@ -20,7 +20,7 @@ class AppIcon(Icon):
         return self._icon
 
     @property
-    def _name(self) -> str:
+    def _label(self) -> str:
         return self._shortcut.name
 
     def _launch(self) -> None:

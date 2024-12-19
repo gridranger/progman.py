@@ -28,10 +28,9 @@ class Shortcut:
         is_protected = 'windows' in self.separate_icon_path.lower()
         if self.separate_icon_path and Path(self.separate_icon_path).exists() and not is_protected:
             return self.separate_icon_path
-        else:
-            if is_protected:
-                self.icon_index = 0
-            return self.target_path
+        if is_protected:
+            self.icon_index = 0
+        return self.target_path
 
     @property
     def launch_command(self) -> list[str]:
