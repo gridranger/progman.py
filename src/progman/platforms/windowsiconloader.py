@@ -13,6 +13,7 @@ from progman.core import Shortcut
 
 
 class WindowsIconLoader:
+    FIXED_ICONS = {"7zFM.exe": "7zip"}
 
     @classmethod
     def load(cls, shortcut: Shortcut) -> PhotoImage:
@@ -27,13 +28,14 @@ class WindowsIconLoader:
 
     @staticmethod
     def _load_from_exe(path: str, icon_index: int) -> PhotoImage:
+        for fixed_icon_match, icon_key in WindowsIconLoader.FIXED_ICONS.items():
+            if path.endswith(fixed_icon_match):
+                return asset_storage[icon_key]
         image_cache = asset_storage.get_icon(path, icon_index)
         if image_cache:
             return image_cache
         size = GetSystemMetrics(SM_CXICON)
         normal, _ = ExtractIconEx(path, icon_index)
-        if _:
-            DestroyIcon(_[0])
         device_context = CreateDCFromHandle(GetDC(0))
         bitmap = CreateBitmap()
         bitmap.CreateCompatibleBitmap(device_context, size, size)
