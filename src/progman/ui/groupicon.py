@@ -1,4 +1,4 @@
-from tkinter import PhotoImage
+from tkinter import PhotoImage, Misc
 
 from ..assets import asset_storage
 from .icon import Icon
@@ -6,8 +6,8 @@ from .icon import Icon
 
 class GroupIcon(Icon):
 
-    def __init__(self, group_name: str, *args: any, **kwargs: any) -> None:
-        Icon.__init__(self, *args, **kwargs)
+    def __init__(self, parent: Misc | None, group_name: str, *args: any, **kwargs: any) -> None:
+        Icon.__init__(self, parent, *args, **kwargs)
         self._group_name = group_name
 
     @property
@@ -19,7 +19,4 @@ class GroupIcon(Icon):
         return self._group_name
 
     def _launch(self) -> None:
-        if self.state.groups[self._group_name].is_collapsed:
-            pass
-        else:
-            pass
+        self.master._launch_child_window(self._group_name)

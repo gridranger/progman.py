@@ -11,16 +11,16 @@ class ProgmanWidget:
         self._texts = {}
 
     @property
-    def state(self) -> State:
-        return self.master.state
+    def app_state(self) -> State:
+        return self.master.app_state
 
     @property
     def language(self) -> Language:
-        return self.state.language
+        return self.app_state.language
 
     @property
     def theme(self) -> Theme:
-        return self.state.theme
+        return self.app_state.theme
 
     def get_label(self, label: str) -> str:
         if not self._texts:
@@ -42,9 +42,7 @@ class ProgmanWidget:
                 child.render()
 
 
-class ProgmanFrame(Frame, ProgmanWidget):
-    pass
+class ProgmanFrame(Frame, ProgmanWidget): pass
 
 
-class ProgmanCanvas(Canvas, ProgmanWidget):
-    pass
+class ProgmanCanvas(Canvas, ProgmanWidget): pass

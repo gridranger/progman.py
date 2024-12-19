@@ -15,10 +15,7 @@ class State:
         self.language: Language = Language()
         self.theme: Theme = Theme()
         self.shortcuts: list[Shortcut] = []
-        self._groups: dict[str, Group] = {
-            Tags.HIDDEN.value: Group("hidden"),
-            Tags.NEW.value: Group("new")
-        }
+        self._groups: dict[str, Group] = {}
 
     @property
     def groups(self) -> dict[str, Group]:
@@ -26,4 +23,6 @@ class State:
             for shortcut in self.shortcuts:
                 for tag in shortcut.tags:
                     self._groups.setdefault(tag, Group(tag)).append(shortcut)
+            self._groups.setdefault(Tags.NEW.value, Group(Tags.NEW.value))
+            self._groups.setdefault(Tags.HIDDEN.value, Group(Tags.HIDDEN.value))
         return self._groups
