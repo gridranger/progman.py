@@ -4,12 +4,13 @@ from tkinter import PhotoImage
 
 class AssetHandler:
     SUPPORTED_EXTENSIONS = ["png"]
+    ASSETS = Path(__file__).parent
     BLANK_PATH = "blank"
 
     def __init__(self) -> None:
         self._available_images = []
         for ext in self.SUPPORTED_EXTENSIONS:
-            self._available_images.extend(Path("assets").glob(f"*{ext}"))
+            self._available_images.extend(self.ASSETS.glob(f"*{ext}"))
         self._blank = None
         self._content = {}
 
