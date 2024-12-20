@@ -18,6 +18,7 @@ class GroupsWindow(Toplevel, ProgmanWidget, Window):
         self._render_drawer()
         self.update_theme()
         ProgmanWidget.render(self)
+        self._icon_drawer.set_initial_geometry()
 
     def _render_title(self) -> None:
         self.title(self._group_name)

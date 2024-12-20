@@ -32,11 +32,39 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
         raise NotImplementedError("Implement this to make this work.")
 
     def _arrange_icons(self) -> None:
-        max_columns = self.master.winfo_width() // Icon.WIDTH
+        max_columns = self._get_columns()
         for index, icon in enumerate(self._icons):
             row = index // max_columns
             column = index % max_columns
             icon.grid(row=row, column=column)
+
+    def _get_columns(self) -> int:
+
+        """
+        # # # # #
+        # # # # #
+        # # # # #
+
+
+        """
+
+
+        icon_count = len(self._icons)
+        if icon_count <= 6:
+            return 3
+        if icon_count <= 12:
+            return 4
+        if icon_count <= 15:
+            return 5
+        if icon_count <= 18:
+            return 6
+
+    def _get_max_rows(self) -> int:
+        
+        return min(max(len(self._icons) // 7, 1), 3)
+
+    def set_initial_geometry(self) -> None:
+        self.master.geometry(f"{self._get_columns() * (Icon.WIDTH + 6)}x{self._get_max_rows() * Icon.HEIGHT + 20}")
 
     def update_size(self, width: int, height: int) -> None:
         self.configure(width=width, height=height)

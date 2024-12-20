@@ -27,6 +27,7 @@ class MainWindow(Tk, ProgmanWidget, Window):
         self.update_language()
         self.update_theme()
         ProgmanWidget.render(self)
+        self._icon_drawer.set_initial_geometry()
 
     def _render_title(self) -> None:
         self._set_title()
