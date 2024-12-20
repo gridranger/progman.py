@@ -1,4 +1,4 @@
-from .shortcut import Shortcut
+from core.shortcut import Shortcut
 
 
 class Group:

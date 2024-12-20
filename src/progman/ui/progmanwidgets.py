@@ -1,6 +1,6 @@
 from tkinter import BaseWidget, Canvas, Frame, StringVar
 
-from progman.core import Language, State, Theme
+from core import Language, State, Theme
 
 
 class ProgmanWidget:

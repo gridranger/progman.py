@@ -1,11 +1,10 @@
 from tkinter import Tk
 
-from progman.core import State
-
-from .groupdrawer import GroupDrawer
-from .menubar import Menubar
-from .progmanwidgets import ProgmanWidget
-from .window import Window
+from core import State
+from ui.groupdrawer import GroupDrawer
+from ui.menubar import Menubar
+from ui.progmanwidgets import ProgmanWidget
+from ui.window import Window
 
 
 class MainWindow(Tk, ProgmanWidget, Window):

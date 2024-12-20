@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from tkinter import Tk, Event
 
-from progman.assets import asset_storage
+from assets import asset_storage
 
 
 class Window(ABC):

@@ -1,10 +1,9 @@
 from subprocess import Popen
 from tkinter import PhotoImage
 
-from progman.core import Shortcut
-
-from ..platforms import IconLoader
-from .icon import Icon
+from core import Shortcut
+from platforms import IconLoader
+from ui.icon import Icon
 
 
 class AppIcon(Icon):

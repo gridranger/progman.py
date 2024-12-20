@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
 from tkinter import Misc
 
-from .icon import Icon
-from .progmanwidgets import ProgmanWidget
-from .scrollframe import ScrollFrame
+from ui.icon import Icon
+from ui.progmanwidgets import ProgmanWidget
+from ui.scrollframe import ScrollFrame
 
 
 class IconDrawer(ABC, ScrollFrame, ProgmanWidget):

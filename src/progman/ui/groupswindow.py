@@ -1,8 +1,8 @@
 from tkinter import Misc, Toplevel
 
-from .window import Window
-from .appdrawer import AppDrawer
-from .progmanwidgets import ProgmanWidget
+from ui.window import Window
+from ui.appdrawer import AppDrawer
+from ui.progmanwidgets import ProgmanWidget
 
 
 class GroupsWindow(Toplevel, ProgmanWidget, Window):

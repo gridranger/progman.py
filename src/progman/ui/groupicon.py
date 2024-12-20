@@ -1,7 +1,7 @@
 from tkinter import PhotoImage, Misc
 
-from ..assets import asset_storage
-from .icon import Icon
+from assets import asset_storage
+from ui.icon import Icon
 
 
 class GroupIcon(Icon):

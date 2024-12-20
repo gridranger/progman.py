@@ -6,9 +6,8 @@ from re import compile as re_compile
 from win32com.client import Dispatch
 from win32com.universal import com_error
 
-from progman.core import Shortcut
-
-from .shortcutcollector import ShortcutCollector
+from core import Shortcut
+from platforms.shortcutcollector import ShortcutCollector
 
 
 class WindowsShortcutCollector(ShortcutCollector):

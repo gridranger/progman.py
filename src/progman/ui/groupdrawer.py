@@ -1,7 +1,7 @@
-from ..core.tags import Tags
-from .groupicon import GroupIcon
-from .icondrawer import IconDrawer
-from .groupswindow import GroupsWindow
+from core.tags import Tags
+from ui.groupicon import GroupIcon
+from ui.icondrawer import IconDrawer
+from ui.groupswindow import GroupsWindow
 
 
 class GroupDrawer(IconDrawer):

@@ -1,9 +1,9 @@
 from typing import TYPE_CHECKING
 
-from .group import Group
-from .language import Language
-from .tags import Tags
-from .theme import Theme
+from core.group import Group
+from core.language import Language
+from core.tags import Tags
+from core.theme import Theme
 
 if TYPE_CHECKING:
     from .shortcut import Shortcut

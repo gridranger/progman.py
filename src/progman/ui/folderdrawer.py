@@ -1,4 +1,4 @@
-from .icondrawer import IconDrawer
+from ui.icondrawer import IconDrawer
 
 
 class FolderDrawer(IconDrawer):

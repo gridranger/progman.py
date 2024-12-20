@@ -1,7 +1,7 @@
 from tkinter import Misc
 
-from .appicon import AppIcon
-from .icondrawer import IconDrawer
+from ui.appicon import AppIcon
+from ui.icondrawer import IconDrawer
 
 
 class AppDrawer(IconDrawer):

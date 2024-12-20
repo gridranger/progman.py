@@ -1,5 +1,5 @@
-from .shortcut import Shortcut
-from .tags import Tags
+from core.shortcut import Shortcut
+from core.tags import Tags
 
 
 class Recognizer:

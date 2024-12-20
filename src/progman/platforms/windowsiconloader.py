@@ -8,8 +8,8 @@ from win32con import SM_CXICON
 from win32gui import DestroyIcon, ExtractIconEx, GetDC
 from win32ui import CreateBitmap, CreateDCFromHandle
 
-from progman.assets import asset_storage
-from progman.core import Shortcut
+from assets import asset_storage
+from core import Shortcut
 
 
 class WindowsIconLoader:

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from tkinter import Event, Frame, Label, PhotoImage
 
-from progman.ui.progmanwidgets import ProgmanWidget
+from ui.progmanwidgets import ProgmanWidget
 
 
 class Icon(ABC, Frame, ProgmanWidget):

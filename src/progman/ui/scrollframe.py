@@ -8,7 +8,7 @@
 from platform import system
 from tkinter import Event, Scrollbar, Tk
 
-from .progmanwidgets import ProgmanCanvas, ProgmanFrame
+from ui.progmanwidgets import ProgmanCanvas, ProgmanFrame
 
 
 # ************************
