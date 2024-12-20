@@ -16,7 +16,7 @@ class Recognizer:
     ]
     negative_extension_filter = [".url", ".txt", ".chm", ".ico"]
     negative_path_hints = [
-        "setlang", "system32", "syswow64",
+        "sapisvr", "setlang", "system32", "syswow64",
         "unins", "unin64",
         "windows kits"
     ]
