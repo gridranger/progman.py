@@ -39,29 +39,22 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
             icon.grid(row=row, column=column)
 
     def _get_columns(self) -> int:
-
-        """
-        # # # # #
-        # # # # #
-        # # # # #
-
-
-        """
-
-
         icon_count = len(self._icons)
-        if icon_count <= 6:
+        if icon_count < 7:
             return 3
-        if icon_count <= 12:
+        if icon_count < 9:
             return 4
-        if icon_count <= 15:
+        if icon_count < 16:
             return 5
-        if icon_count <= 18:
+        if icon_count < 19:
             return 6
+        return 7
 
     def _get_max_rows(self) -> int:
-        
-        return min(max(len(self._icons) // 7, 1), 3)
+        if len(self._icons) < 11:
+            return 2
+        else:
+            return 3
 
     def set_initial_geometry(self) -> None:
         self.master.geometry(f"{self._get_columns() * (Icon.WIDTH + 6)}x{self._get_max_rows() * Icon.HEIGHT + 20}")

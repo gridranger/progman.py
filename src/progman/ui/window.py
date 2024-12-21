@@ -5,6 +5,7 @@ from assets import asset_storage
 
 
 class Window(ABC):
+    DEFAULT_DIMENSIONS = "253x172"
 
     def __init__(self, icon_name: str) -> None:
         self._icon_name = icon_name
@@ -24,7 +25,7 @@ class Window(ABC):
 
     def _render_window(self):
         self._render_title()
-        self.geometry("640x480")
+        self.geometry(self.DEFAULT_DIMENSIONS)
         self._render_icon()
         self.bind("<Configure>", self._update_size)
 
