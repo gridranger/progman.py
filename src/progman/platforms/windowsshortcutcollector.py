@@ -48,13 +48,16 @@ class WindowsShortcutCollector(ShortcutCollector):
         else:
             icon_path = raw_icon_path
             icon_index = 0
+        target_path = WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.TargetPath)
+        if not target_path and icon_path.endswith("explorer.exe"):
+            target_path = icon_path
         return Shortcut(
             arguments=platform_dependent_shortcut.Arguments,
             description=description,
             link_path=WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.FullName),
             hotkey=platform_dependent_shortcut.Hotkey,
             separate_icon_path=icon_path, icon_index=icon_index,
-            target_path=WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.TargetPath),
+            target_path=target_path,
             workdir_path=WindowsShortcutCollector.resolve_env_vars(platform_dependent_shortcut.WorkingDirectory)
         )
 

@@ -27,10 +27,10 @@ class Window(ABC):
         self._render_title()
         self.geometry(self.DEFAULT_DIMENSIONS)
         self._render_icon()
-        self.bind("<Configure>", self._update_size)
+        self.bind("<Configure>", self._update_configuration)
 
-    def _update_size(self, event: Event) -> None:
-        self._icon_drawer.update_size(event.width, event.height)
+    def _update_configuration(self, event: Event) -> None:
+        self._icon_drawer.update_configuration(event.width, event.height)
 
     def _render_drawer(self) -> None:
         self.rowconfigure(0, weight=1)

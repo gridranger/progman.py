@@ -13,7 +13,11 @@ from core import Shortcut
 
 
 class WindowsIconLoader:
-    FIXED_ICONS = {"7zFM.exe": "7zip"}
+    FIXED_ICONS = {
+        "7zFM.exe": "7zip",
+        "shotcut.exe": "shotcut",
+        "WacomI18N.dll": "wacom"
+    }
 
     @classmethod
     def load(cls, shortcut: Shortcut) -> PhotoImage:

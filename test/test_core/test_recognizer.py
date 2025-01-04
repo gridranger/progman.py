@@ -1,6 +1,6 @@
 from unittest.mock import Mock
 
-from progman.core import Recognizer
+from core import Recognizer
 
 
 class TestRecognizer:

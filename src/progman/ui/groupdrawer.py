@@ -1,7 +1,7 @@
 from core.tags import Tags
 from ui.groupicon import GroupIcon
 from ui.icondrawer import IconDrawer
-from ui.groupswindow import GroupsWindow
+from ui.groupwindow import GroupWindow
 
 
 class GroupDrawer(IconDrawer):
@@ -19,5 +19,8 @@ class GroupDrawer(IconDrawer):
             self._icons.append(icon)
 
     def _launch_child_window(self, group_name: str) -> None:
-        child_window = GroupsWindow(self.master, group_name)
+        child_window = GroupWindow(self.master, group_name)
         child_window.render()
+
+    def _store_configuration(self) -> None:
+        pass  # self.app_state.groups["Program Manager"].set_geometry(self.geometry())

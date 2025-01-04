@@ -1,4 +1,5 @@
 from platform import system
+from platforms.datahandler import DataHandler
 
 if system().lower() == "windows":
     from .windowsiconloader import WindowsIconLoader as IconLoader
@@ -7,4 +8,4 @@ else:
     raise NotImplementedError
 
 
-__all__ = ["IconLoader", "ShortcutCollector"]
+__all__ = ["DataHandler", "IconLoader", "ShortcutCollector"]

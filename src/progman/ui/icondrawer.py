@@ -59,11 +59,12 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
     def set_initial_geometry(self) -> None:
         self.master.geometry(f"{self._get_columns() * (Icon.WIDTH + 6)}x{self._get_max_rows() * Icon.HEIGHT + 20}")
 
-    def update_size(self, width: int, height: int) -> None:
+    def update_configuration(self, width: int, height: int) -> None:
         self.configure(width=width, height=height)
         self.viewPort.configure(width=width, height=height)
         self._arrange_icons()
         self._update_scrollbar()
+        self._store_configuration()
 
     def _update_scrollbar(self) -> None:
         last_icon = list(self.viewPort.children.values())[-1] if self.viewPort.children else None
@@ -71,3 +72,7 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
             self._place_scrollbar()
         else:
             self.vsb.grid_forget()
+
+    @abstractmethod
+    def _store_configuration(self) -> None:
+        pass

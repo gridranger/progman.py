@@ -4,6 +4,9 @@ from pathlib import Path
 
 @dataclass
 class Shortcut:
+    FIELDS_TO_SAVE = ["target_path", "arguments", "workdir_path", "separate_icon_path", "icon_index", "name",
+                      "link_path", "description", "hotkey", "created_by_user", "tags"]
+
     target_path: str
     arguments: str
     workdir_path: str

@@ -1,4 +1,4 @@
-from progman.core import Shortcut
+from core import Shortcut
 
 
 class TestShortcut:

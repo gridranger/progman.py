@@ -26,3 +26,7 @@ class State:
             self._groups.setdefault(Tags.NEW.value, Group(Tags.NEW.value))
             self._groups.setdefault(Tags.HIDDEN.value, Group(Tags.HIDDEN.value))
         return self._groups
+
+    def add_group(self, group: Group) -> None:
+        geometry = f"{group.size[0]}x{group.size[1]}+{group.position[0]}+{group.position[1]}"
+        self._groups[group.name] = Group(group.name, group.is_collapsed, geometry)

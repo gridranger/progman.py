@@ -24,19 +24,23 @@ class Recognizer:
         Tags.ACCESSORIES: [
             "7-Zip",
             "Acrobat", "Auto Dark Mode",
+            "Angry IP Scanner",
+            "Double Commander",
+            "File Explorer",
             "GeForce",
             "Hard Disk Sentinel",
             "ImgBurn",
             "Logi Options", "Logi Plugin",
             "Notepad",
             "Pi Imager",
+            "PowerShell",
             "Registry Editor",
             "Speech Recognition", "Sticky Notes",
             "Total Commander",
             "Wordpad"
         ],
         Tags.CREATIVITY: [
-            "Gimp",
+            "GIMP",
             "Inkscape", "Inkview",
             "Obsidian",
             "Shotcut",
@@ -48,31 +52,34 @@ class Recognizer:
             "IDLE",
             "PhpStorm", "PyCharm", "Python",
             "Visual Studio", "VSCod",
-            "Webstorm",
+            "WebStorm",
             "Wireshark"
         ],
         Tags.GAMES: [
             "Epic Games",
             "Steam",
-            "Ubisoft Connect"
+            "Ubisoft Connect",
+            "Vortex"
         ],
         Tags.INTERNET: [
             "Chrom",
             "Discord",
             "Edge",
+            "qBitt",
             "Teams",
             "Viber",
             "Zoom"
         ],
         Tags.MULTIMEDIA: [
             "FreeTube",
-            "Media Player"
+            "Media Player",
+            "VLC media player"
         ],
         Tags.OFFICE: [
             "Access",
             "Excel",
-            "OneDrive", "OneNote", "Outlook"
-            "PowerPoint"
+            "OneDrive", "OneNote", "Outlook",
+            "PowerPoint",
             "Publisher",
             "Word"
         ]
@@ -84,7 +91,7 @@ class Recognizer:
         Tags.GAMES: [
             "EALauncher",
             "steamapps",
-            "games"
+            "games", "Games"
         ]
     }
 

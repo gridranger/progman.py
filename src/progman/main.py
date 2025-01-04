@@ -13,10 +13,12 @@ class ProgramManager:
     def run(self) -> None:
         self._load_content()
         self._root.render()
+        self._root.protocol("WM_DELETE_WINDOW", self._root.save_on_quit)
         self._root.mainloop()
 
     def _load_content(self) -> None:
         if self._is_first_run:
+            
             self.app_state.shortcuts = ShortcutCollector().collect_links()
             for shortcut in self.app_state.shortcuts:
                 Recognizer.categorize(shortcut)

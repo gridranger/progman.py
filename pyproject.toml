@@ -23,7 +23,7 @@ max-complexity = 10
 
 [tool.pytest.ini_options]
 addopts = "--cov=progman --cov-report=term-missing:skip-covered"
-pythonpath = ["src"]
+pythonpath = ["src/progman"]
 testpaths = ["test"]
 
 [tool.ruff]

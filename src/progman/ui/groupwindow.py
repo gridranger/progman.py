@@ -5,7 +5,7 @@ from ui.appdrawer import AppDrawer
 from ui.progmanwidgets import ProgmanWidget
 
 
-class GroupsWindow(Toplevel, ProgmanWidget, Window):
+class GroupWindow(Toplevel, ProgmanWidget, Window):
 
     def __init__(self, parent: Misc | None, group_name: str, *args: any, **kwargs: any) -> None:
         Toplevel.__init__(self, parent, *args, **kwargs)

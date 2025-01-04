@@ -1,4 +1,6 @@
 class Theme:
+    name = "Default"
+    creator = "Gridranger"
     background = "white"
     background_selected = "#0000A8"
     border_active = "#C0C4C8"  # unused, listed for tradition

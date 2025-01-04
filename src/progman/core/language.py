@@ -1,5 +1,6 @@
 class Language:
     content = {
+        "language": "en",
         "root": {"title": "Program Manager"},
         "menu_bar": {
             "file": "File",

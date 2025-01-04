@@ -1,6 +1,7 @@
 from .group import Group
 from .language import Language
 from .recognizer import Recognizer
+from .protocols import Savable
 from .shortcut import Shortcut
 from .state import State
 from .tags import Tags

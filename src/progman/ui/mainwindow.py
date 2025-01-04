@@ -1,6 +1,7 @@
 from tkinter import Tk
 
 from core import State
+from platforms import DataHandler
 from ui.groupdrawer import GroupDrawer
 from ui.menubar import Menubar
 from ui.progmanwidgets import ProgmanWidget
@@ -15,6 +16,7 @@ class MainWindow(Tk, ProgmanWidget, Window):
         ProgmanWidget.__init__(self, "root")
         Window.__init__(self, "progman")
         self._menubar = None
+        self._data_handler = DataHandler(self.app_state)
 
     @property
     def app_state(self) -> State:
@@ -48,5 +50,12 @@ class MainWindow(Tk, ProgmanWidget, Window):
         ProgmanWidget.update_language(self)
 
     def update_theme(self) -> None:
-        ProgmanWidget.update_theme(self)
         self.configure(bg=self.theme.background)
+        ProgmanWidget.update_theme(self)
+
+    def save(self) -> None:
+        self._data_handler.save()
+
+    def save_on_quit(self) -> None:
+        self.save()
+        self.destroy()
