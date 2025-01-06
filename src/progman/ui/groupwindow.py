@@ -26,3 +26,7 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
     def _render_drawer(self) -> None:
         Window._render_drawer(self)
         self._icon_drawer = AppDrawer(self, self._group_name)
+
+    def update_theme(self) -> None:
+        self.configure(bg=self.theme.background)
+        ProgmanWidget.update_theme(self)
