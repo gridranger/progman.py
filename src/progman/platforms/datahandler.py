@@ -40,7 +40,6 @@ class DataHandler:
         for group in self._last_saved_state["groups"]:
             self._state.add_group(group)
 
-
     def save(self) -> None:
         save_state = self._create_save_state()
         if save_state == self._last_saved_state:
@@ -53,7 +52,8 @@ class DataHandler:
         return {
             "theme": self._state.theme.name,
             "language": self._state.language.content["language"],
-            "groups": [self._serialize(group) for group in self._state.groups.values()],
+            "main_window_geometry": self._state.main_window_geometry,
+            "groups": [self._serialize(group) for group in self._state.group_windows.values()],
             "shortcuts": [self._serialize(shortcut) for shortcut in self._state.shortcuts]
         }
 
@@ -61,5 +61,6 @@ class DataHandler:
     def _serialize(item: Savable) -> dict:
         result = {}
         for field in item.FIELDS_TO_SAVE:
-            result[field] = getattr(item, field)
+            field_name = field.replace("_as_string", "")
+            result[field_name] = getattr(item, field)
         return result

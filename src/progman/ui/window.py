@@ -12,6 +12,10 @@ class Window(ABC):
         self._icon = None
         self._icon_drawer = None
 
+    @property
+    def geometry_as_string(self) -> str:
+        return self.geometry()
+
     def render(self: Tk) -> None:
         self._render_window()
 

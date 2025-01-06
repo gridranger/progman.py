@@ -16,6 +16,8 @@ class State:
         self.theme: Theme = Theme()
         self.shortcuts: list[Shortcut] = []
         self._groups: dict[str, Group] = {}
+        self.group_windows = {}
+        self.main_window_geometry = ""
 
     @property
     def groups(self) -> dict[str, Group]:

@@ -70,3 +70,7 @@ class MainWindow(Tk, ProgmanWidget, Window):
         if event.widget == self:
             self._icon_drawer.restore_child_windows()
             self.focus_set()
+
+    def _update_configuration(self, event: Event) -> None:
+        Window._update_configuration(self, event)
+        self.app_state.main_window_geometry = self.geometry()

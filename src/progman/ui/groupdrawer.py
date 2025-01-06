@@ -10,7 +10,6 @@ class GroupDrawer(IconDrawer):
     def __init__(self, parent: any) -> None:
         IconDrawer.__init__(self, parent)
         self.viewPort._launch_child_window = self._launch_child_window
-        self._child_windows = {}
 
     def _render_icons(self) -> None:
         for group_name, group in self.app_state.groups.items():
@@ -20,21 +19,21 @@ class GroupDrawer(IconDrawer):
             self._icons.append(icon)
 
     def _launch_child_window(self, group_name: str) -> None:
-        if group_name in self._child_windows:
-            self._child_windows[group_name].deiconify()
-            self._child_windows[group_name].focus_set()
+        if group_name in self.app_state.group_windows:
+            self.app_state.group_windows[group_name].deiconify()
+            self.app_state.group_windows[group_name].focus_set()
         else:
-            self._child_windows[group_name] = GroupWindow(self.master, group_name)
-            self._child_windows[group_name].render()
+            self.app_state.group_windows[group_name] = GroupWindow(self.master, group_name)
+            self.app_state.group_windows[group_name].render()
 
     def _store_configuration(self) -> None:
         pass  # self.app_state.groups["Program Manager"].set_geometry(self.geometry())
 
     def minimize_child_windows(self):
-        for child_window in self._child_windows.values():
+        for child_window in self.app_state.group_windows.values():
             child_window.iconify()
 
     def restore_child_windows(self):
-        for child_window in self._child_windows.values():
+        for child_window in self.app_state.group_windows.values():
             child_window.update_idletasks()
             child_window.deiconify()

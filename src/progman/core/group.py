@@ -2,7 +2,6 @@ from core.shortcut import Shortcut
 
 
 class Group:
-    FIELDS_TO_SAVE = ["name", "is_collapsed", "size", "position"]
 
     def __init__(self, name: str, is_collapsed: bool = True, geometry: str = "") -> None:
         self.name = name
