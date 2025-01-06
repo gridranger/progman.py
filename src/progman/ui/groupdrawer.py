@@ -29,3 +29,12 @@ class GroupDrawer(IconDrawer):
 
     def _store_configuration(self) -> None:
         pass  # self.app_state.groups["Program Manager"].set_geometry(self.geometry())
+
+    def minimize_child_windows(self):
+        for child_window in self._child_windows.values():
+            child_window.iconify()
+
+    def restore_child_windows(self):
+        for child_window in self._child_windows.values():
+            child_window.update_idletasks()
+            child_window.deiconify()

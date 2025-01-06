@@ -1,4 +1,4 @@
-from tkinter import Tk
+from tkinter import Event, Tk
 
 from core import State
 from platforms import DataHandler
@@ -30,6 +30,8 @@ class MainWindow(Tk, ProgmanWidget, Window):
         self.update_theme()
         ProgmanWidget.render(self)
         self._icon_drawer.set_initial_geometry()
+        self.bind("<Map>", self._on_deiconify)
+        self.bind("<Unmap>", self._on_iconify)
 
     def _render_title(self) -> None:
         self._set_title()
@@ -59,3 +61,12 @@ class MainWindow(Tk, ProgmanWidget, Window):
     def save_on_quit(self) -> None:
         self.save()
         self.destroy()
+
+    def _on_iconify(self, event: Event) -> None:
+        if event.widget == self:
+            self._icon_drawer.minimize_child_windows()
+
+    def _on_deiconify(self, event: Event) -> None:
+        if event.widget == self:
+            self._icon_drawer.restore_child_windows()
+            self.focus_set()
