@@ -1,9 +1,9 @@
-from json import load, dump
+from json import dump, load
 from os import getenv
 from pathlib import Path
 from platform import system
 
-from core import Savable, Shortcut, State, Language, Theme
+from core import Language, Savable, Shortcut, State, Theme
 
 
 class DataHandler:
@@ -16,21 +16,20 @@ class DataHandler:
     def _settings_folder_path(self) -> Path:
         if system().lower() == "windows":
             return Path(getenv("LOCALAPPDATA")).joinpath("Progman")
-        else:
-            return Path.home().joinpath(".progman")
+        return Path.home().joinpath(".progman")
 
     @property
     def _file_path(self) -> Path:
         return self._settings_folder_path.joinpath("settings.json")
 
-    def _find_settings_folder(self):
+    def _find_settings_folder(self) -> None:
         if not self._settings_folder_path.exists():
             self._settings_folder_path.mkdir(exist_ok=True, parents=True)
 
     def load(self) -> State:
         if not self._settings_folder_path.exists() or not self._file_path.exists():
             return State()
-        with open(self._file_path, "r") as file_handler:
+        with Path(self._file_path).open() as file_handler:
             self._last_saved_state = load(file_handler)
         return self._load_state()
 
@@ -48,7 +47,7 @@ class DataHandler:
         if save_state == self._last_saved_state:
             return
         self._find_settings_folder()
-        with open(self._file_path, "w") as file_handler:
+        with Path(self._file_path).open("w") as file_handler:
             dump(save_state, file_handler, indent=4, ensure_ascii=False)
 
     def _create_save_state(self) -> dict:

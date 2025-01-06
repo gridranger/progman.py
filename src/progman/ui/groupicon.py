@@ -1,4 +1,4 @@
-from tkinter import PhotoImage, Misc
+from tkinter import Misc, PhotoImage
 
 from assets import asset_storage
 from ui.icon import Icon
@@ -19,4 +19,4 @@ class GroupIcon(Icon):
         return self._group_name
 
     def _launch(self) -> None:
-        self.master._launch_child_window(self._group_name)
+        self.master.launch_child_window(self._group_name)

@@ -1,8 +1,8 @@
-from tkinter import Misc, Toplevel, Event
+from tkinter import Event, Misc, Toplevel
 
-from ui.window import Window
 from ui.appdrawer import AppDrawer
 from ui.progmanwidgets import ProgmanWidget
+from ui.window import Window
 
 
 class GroupWindow(Toplevel, ProgmanWidget, Window):
@@ -20,7 +20,7 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
 
     def render(self) -> None:
         Window.render(self)
-        self._render_drawer()
+        self.render_drawer()
         self.update_theme()
         ProgmanWidget.render(self)
         self._icon_drawer.set_initial_geometry()
@@ -29,8 +29,8 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
     def _render_title(self) -> None:
         self.title(self._group_name)
 
-    def _render_drawer(self) -> None:
-        Window._render_drawer(self)
+    def render_drawer(self) -> None:
+        Window.render_drawer(self)
         self._icon_drawer = AppDrawer(self, self._group_name)
 
     def _on_destroy(self, event: Event) -> None:

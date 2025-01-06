@@ -1,4 +1,5 @@
 from platform import system
+
 from platforms.datahandler import DataHandler
 
 if system().lower() == "windows":

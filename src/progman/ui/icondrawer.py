@@ -53,8 +53,7 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
     def _get_max_rows(self) -> int:
         if len(self._icons) < 11:
             return 2
-        else:
-            return 3
+        return 3
 
     def set_initial_geometry(self) -> None:
         if self.master.group_name in self.app_state.suspended_group_windows:

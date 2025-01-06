@@ -1,5 +1,5 @@
-from core import Recognizer, State
-from platforms import ShortcutCollector, DataHandler
+from core import Recognizer
+from platforms import DataHandler, ShortcutCollector
 from ui.mainwindow import MainWindow
 
 
@@ -18,7 +18,7 @@ class ProgramManager:
 
     def _load_content(self) -> None:
         if self._is_first_run:
-            
+
             self.app_state.shortcuts = ShortcutCollector().collect_links()
             for shortcut in self.app_state.shortcuts:
                 Recognizer.categorize(shortcut)

@@ -3,11 +3,10 @@ from pathlib import Path
 from re import Match
 from re import compile as re_compile
 
-from win32com.client import Dispatch
-from win32com.universal import com_error
-
 from core import Shortcut
 from platforms.shortcutcollector import ShortcutCollector
+from win32com.client import Dispatch
+from win32com.universal import com_error
 
 
 class WindowsShortcutCollector(ShortcutCollector):

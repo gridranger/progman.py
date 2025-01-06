@@ -1,7 +1,7 @@
 from core.tags import Tags
 from ui.groupicon import GroupIcon
-from ui.icondrawer import IconDrawer
 from ui.groupwindow import GroupWindow
+from ui.icondrawer import IconDrawer
 
 
 class GroupDrawer(IconDrawer):
@@ -9,7 +9,7 @@ class GroupDrawer(IconDrawer):
 
     def __init__(self, parent: any) -> None:
         IconDrawer.__init__(self, parent)
-        self.viewPort._launch_child_window = self._launch_child_window
+        self.viewPort.launch_child_window = self.launch_child_window
 
     def _render_icons(self) -> None:
         for group_name, group in self.app_state.groups.items():
@@ -18,7 +18,7 @@ class GroupDrawer(IconDrawer):
             icon = GroupIcon(self.viewPort, group_name)
             self._icons.append(icon)
 
-    def _launch_child_window(self, group_name: str) -> None:
+    def launch_child_window(self, group_name: str) -> None:
         if group_name in self.app_state.group_windows:
             self.app_state.group_windows[group_name].deiconify()
             self.app_state.group_windows[group_name].focus_set()
@@ -26,16 +26,16 @@ class GroupDrawer(IconDrawer):
             self.app_state.group_windows[group_name] = GroupWindow(self.master, group_name)
             self.app_state.group_windows[group_name].render()
 
-    def minimize_child_windows(self):
+    def minimize_child_windows(self) -> None:
         for child_window in self.app_state.group_windows.values():
             child_window.iconify()
 
-    def restore_child_windows(self):
+    def restore_child_windows(self) -> None:
         for child_window in self.app_state.group_windows.values():
             child_window.update_idletasks()
             child_window.deiconify()
 
-    def restore_last_windows(self):
+    def restore_last_windows(self) -> None:
         windows_to_restore = list(self.app_state.suspended_group_windows.items())
         self.app_state.suspended_group_windows = {}
         for group_name, restoration_data in windows_to_restore:

@@ -42,7 +42,9 @@ class ProgmanWidget:
                 child.render()
 
 
-class ProgmanFrame(Frame, ProgmanWidget): pass
+class ProgmanFrame(Frame, ProgmanWidget):
+    pass
 
 
-class ProgmanCanvas(Canvas, ProgmanWidget): pass
+class ProgmanCanvas(Canvas, ProgmanWidget):
+    pass

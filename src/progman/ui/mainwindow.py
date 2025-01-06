@@ -30,7 +30,7 @@ class MainWindow(Tk, ProgmanWidget, Window):
     def render(self) -> None:
         Window.render(self)
         self._render_menubar()
-        self._render_drawer()
+        self.render_drawer()
         self.update_language()
         self.update_theme()
         ProgmanWidget.render(self)
@@ -49,8 +49,8 @@ class MainWindow(Tk, ProgmanWidget, Window):
         self._menubar = Menubar(self)
         self.configure(menu=self._menubar)
 
-    def _render_drawer(self) -> None:
-        Window._render_drawer(self)
+    def render_drawer(self) -> None:
+        Window.render_drawer(self)
         self._icon_drawer = GroupDrawer(self)
 
     def _set_title(self, *_args: any) -> None:
@@ -79,8 +79,8 @@ class MainWindow(Tk, ProgmanWidget, Window):
             self._icon_drawer.restore_child_windows()
             self.focus_set()
 
-    def _update_configuration(self, event: Event) -> None:
+    def update_configuration(self, event: Event) -> None:
         if event.widget == self:
-            Window._update_configuration(self, event)
-            corrected_geometry = f"{self.winfo_width()}x{self.winfo_height()+20}+{self.winfo_x()}+{self.winfo_y()}"
+            Window.update_configuration(self, event)
+            corrected_geometry = f"{self.winfo_width()}x{self.winfo_height() + 20}+{self.winfo_x()}+{self.winfo_y()}"
             self.app_state.main_window_geometry = corrected_geometry

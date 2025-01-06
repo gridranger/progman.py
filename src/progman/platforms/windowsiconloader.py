@@ -1,15 +1,14 @@
 from pathlib import Path
 from winreg import HKEY_CLASSES_ROOT, OpenKey, QueryValueEx
 
+from assets import asset_storage
+from core import Shortcut
 from PIL import Image, ImageTk
 from PIL.ImageTk import PhotoImage
 from win32api import GetSystemMetrics
 from win32con import SM_CXICON
-from win32gui import DestroyIcon, ExtractIconEx, GetDC
+from win32gui import ExtractIconEx, GetDC
 from win32ui import CreateBitmap, CreateDCFromHandle
-
-from assets import asset_storage
-from core import Shortcut
 
 
 class WindowsIconLoader:
