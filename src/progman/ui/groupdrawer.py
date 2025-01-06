@@ -10,6 +10,7 @@ class GroupDrawer(IconDrawer):
     def __init__(self, parent: any) -> None:
         IconDrawer.__init__(self, parent)
         self.viewPort._launch_child_window = self._launch_child_window
+        self._child_windows = {}
 
     def _render_icons(self) -> None:
         for group_name, group in self.app_state.groups.items():
@@ -19,8 +20,12 @@ class GroupDrawer(IconDrawer):
             self._icons.append(icon)
 
     def _launch_child_window(self, group_name: str) -> None:
-        child_window = GroupWindow(self.master, group_name)
-        child_window.render()
+        if group_name in self._child_windows:
+            self._child_windows[group_name].deiconify()
+            self._child_windows[group_name].focus_set()
+        else:
+            self._child_windows[group_name] = GroupWindow(self.master, group_name)
+            self._child_windows[group_name].render()
 
     def _store_configuration(self) -> None:
         pass  # self.app_state.groups["Program Manager"].set_geometry(self.geometry())
