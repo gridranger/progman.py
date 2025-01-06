@@ -17,10 +17,15 @@ class MainWindow(Tk, ProgmanWidget, Window):
         Window.__init__(self, "progman")
         self._menubar = None
         self._data_handler = DataHandler(self.app_state)
+        self._is_first_render = True
 
     @property
     def app_state(self) -> State:
         return self._state
+
+    @property
+    def group_name(self) -> str:
+        return "Program Manager"
 
     def render(self) -> None:
         Window.render(self)
@@ -32,6 +37,9 @@ class MainWindow(Tk, ProgmanWidget, Window):
         self._icon_drawer.set_initial_geometry()
         self.bind("<Map>", self._on_deiconify)
         self.bind("<Unmap>", self._on_iconify)
+        if self._is_first_render:
+            self._icon_drawer.restore_last_windows()
+            self._is_first_render = False
 
     def _render_title(self) -> None:
         self._set_title()
@@ -72,5 +80,7 @@ class MainWindow(Tk, ProgmanWidget, Window):
             self.focus_set()
 
     def _update_configuration(self, event: Event) -> None:
-        Window._update_configuration(self, event)
-        self.app_state.main_window_geometry = self.geometry()
+        if event.widget == self:
+            Window._update_configuration(self, event)
+            corrected_geometry = f"{self.winfo_width()}x{self.winfo_height()+20}+{self.winfo_x()}+{self.winfo_y()}"
+            self.app_state.main_window_geometry = corrected_geometry

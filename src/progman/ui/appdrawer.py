@@ -14,6 +14,3 @@ class AppDrawer(IconDrawer):
         for shortcut in self.app_state.shortcuts:
             if self._category in shortcut.tags:
                 self._icons.append(AppIcon(shortcut, self.viewPort))
-
-    def _store_configuration(self) -> None:
-        self.app_state.groups[self._category].set_geometry(self.master.geometry())

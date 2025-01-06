@@ -1,5 +1,5 @@
 from core import Recognizer, State
-from platforms import ShortcutCollector
+from platforms import ShortcutCollector, DataHandler
 from ui.mainwindow import MainWindow
 
 
@@ -7,7 +7,7 @@ class ProgramManager:
 
     def __init__(self) -> None:
         self._is_first_run = True  # TODO: calculate it dynamically
-        self.app_state = State()
+        self.app_state = DataHandler().load()
         self._root = MainWindow(self.app_state)
 
     def run(self) -> None:

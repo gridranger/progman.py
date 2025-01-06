@@ -36,6 +36,7 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
     def _on_destroy(self, event: Event) -> None:
         if event.widget == self:
             self.app_state.group_windows.pop(self._group_name)
+            self.app_state.suspended_group_windows[self._group_name] = self.geometry_as_string
 
     def update_theme(self) -> None:
         self.configure(bg=self.theme.background)

@@ -17,6 +17,7 @@ class State:
         self.shortcuts: list[Shortcut] = []
         self._groups: dict[str, Group] = {}
         self.group_windows = {}
+        self.suspended_group_windows = {}
         self.main_window_geometry = ""
 
     @property
