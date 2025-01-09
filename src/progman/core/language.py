@@ -4,13 +4,9 @@ class Language:
         "root": {"title": "Program Manager"},
         "menu_bar": {
             "file": "File",
-            "new": "New...",
-            "open": "Open",
-            "move": "Move...",
-            "copy": "Copy...",
-            "delete": "Delete",
-            "properties": "Properties",
-            "run": "Run",
+            "new_group": "New group",
+            "new_icon": "New icon",
+            "save": "Save",
             "exit": "Exit"
         },
         "icon": {},
