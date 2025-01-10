@@ -34,7 +34,8 @@ class Window(ABC):
         self.bind("<Configure>", self.update_configuration)
 
     def update_configuration(self, event: Event) -> None:
-        self._icon_drawer.update_configuration(event.width, event.height)
+        if event.widget == self:
+            self._icon_drawer.update_configuration(event.width, event.height)
 
     def render_drawer(self) -> None:
         self.rowconfigure(0, weight=1)

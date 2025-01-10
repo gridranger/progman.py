@@ -22,7 +22,6 @@ class ScrollFrame(ProgmanFrame):
         self.viewPort = ProgmanFrame(self.canvas, background="#ffffff")  # place a frame on the canvas, this frame will hold the child widgets
         self.vsb = Scrollbar(parent, orient="vertical", command=self.canvas.yview)  # place a scrollbar on self
         self.canvas.configure(yscrollcommand=self.vsb.set)  # attach scrollbar action to scroll of canvas
-        self._place_scrollbar()  # pack scrollbar to right of self
         self.canvas.grid(row=0, column=0, sticky="nsew")  # pack canvas to left of self and expand to fil
         self.canvas_window = self.canvas.create_window((4, 4), window=self.viewPort, anchor="nw", tags="self.viewPort")  # add view port frame to canvas
         self.viewPort.bind("<Configure>", self._on_frame_configure)  # bind an event whenever the size of the viewPort frame changes.
@@ -32,7 +31,7 @@ class ScrollFrame(ProgmanFrame):
         self._on_frame_configure(None)  # perform an initial stretch on render, otherwise the scroll region has a tiny border until the first resize
 
     def _place_scrollbar(self) -> None:
-        self.vsb.grid(row=0, column=1, sticky="ns")
+        self.vsb.grid(row=0, column=1, sticky="nse")
 
     def _on_frame_configure(self, _event: Event | None) -> None:
         """Reset the scroll region to encompass the inner frame"""
