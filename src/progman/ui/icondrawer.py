@@ -12,6 +12,7 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
         ScrollFrame.__init__(self, parent, *args, **kwargs)
         ProgmanWidget.__init__(self, "icon_drawer")
         self._icons: list[Icon] = []
+        self._default_geometry = True
         self.viewPort.on_enter = self.on_enter
         self.viewPort.on_leave = self.on_leave
 
@@ -39,6 +40,8 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
             icon.grid(row=row, column=column)
 
     def _get_columns(self) -> int:
+        if not self._default_geometry:
+            return (self.winfo_width() // Icon.WIDTH) or 1
         icon_count = len(self._icons)
         if icon_count < 7:
             return 3
@@ -57,6 +60,7 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
 
     def set_initial_geometry(self) -> None:
         if self.master.group_name in self.app_state.suspended_group_windows:
+            self._default_geometry = False
             geometry = self.app_state.suspended_group_windows.pop(self.master.group_name)
             self.master.geometry(geometry)
         else:
@@ -66,6 +70,10 @@ class IconDrawer(ABC, ScrollFrame, ProgmanWidget):
         self.master.geometry(f"{self._get_columns() * (Icon.WIDTH + 6)}x{self._get_max_rows() * Icon.HEIGHT + 20}")
 
     def update_configuration(self, width: int, height: int) -> None:
+        current_config = self.winfo_width(), self.winfo_height()
+        if current_config == (width, height):
+            return
+        self._default_geometry = False
         self.configure(width=width, height=height)
         self.viewPort.configure(width=width, height=height)
         self._arrange_icons()
