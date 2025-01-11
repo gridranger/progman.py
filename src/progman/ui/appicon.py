@@ -20,6 +20,8 @@ class AppIcon(Icon):
 
     @property
     def _label(self) -> str:
+        if len(self._shortcut.name) > 20:
+            return self._shortcut.name[:17] + "..."
         return self._shortcut.name
 
     def _launch(self) -> None:

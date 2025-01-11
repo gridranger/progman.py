@@ -16,6 +16,8 @@ class GroupIcon(Icon):
 
     @property
     def _label(self) -> str:
+        if len(self._group_name) > 20:
+            return self._group_name[:17] + "..."
         return self._group_name
 
     def _launch(self) -> None:
