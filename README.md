@@ -6,6 +6,8 @@ It is designed to be platform-independent but platform-dependent development hap
 
 It is written in Python v3.13 using TkInter to be as lightweight as possible.
 
+![screenshot.png](docs%2Fscreenshot.png)
+
 ## Features already available
 
 * Organizes the app launcher icons to groups displayed in separate windows.
