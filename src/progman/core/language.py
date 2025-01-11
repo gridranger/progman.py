@@ -10,5 +10,11 @@ class Language:
             "exit": "Exit"
         },
         "icon": {},
-        "icon_drawer": {}
+        "icon_drawer": {},
+        "new_group_window": {
+            "cancel": "Cancel",
+            "name": "Name:",
+            "ok": "OK",
+            "title": "New group"
+        },
     }

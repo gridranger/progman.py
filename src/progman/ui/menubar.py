@@ -11,7 +11,7 @@ class Menubar(Menu, ProgmanWidget):
         self._menus = {}
         self._raw_menu_data = {
             "file": [
-                {"label": "new_group", "command": self.master.save, "state": "disabled"},
+                {"label": "new_group", "command": self._new_group, "state": "normal"},
                 {"label": "new_icon", "command": self.master.save, "state": "disabled"},
                 {"separator": True},
                 {"label": "save", "command": self.master.save, "state": "normal"},
@@ -19,6 +19,7 @@ class Menubar(Menu, ProgmanWidget):
                 {"label": "exit", "command": self.quit, "state": "normal"}
             ]
         }
+        # self.event_add(ProgManEvent.NEW_GROUP, "None")
 
     def render(self) -> None:
         for menu_name, menu_data in self._raw_menu_data.items():
@@ -34,7 +35,6 @@ class Menubar(Menu, ProgmanWidget):
                     )
             self.add_cascade(label=self.get_label(menu_name), menu=self._menus[menu_name])
 
-
     def _set_file_menu_label(self, *_args: any) -> None:
         self.entryconfig(0, label=self.get_label("file"))
         self._menus["file"].entryconfig(0, label=self.get_label("new_group"))
@@ -48,3 +48,6 @@ class Menubar(Menu, ProgmanWidget):
 
     def update_language(self) -> None:
         ProgmanWidget.update_language(self)
+
+    def _new_group(self) -> None:
+        self.master.show_new_group_dialogue()

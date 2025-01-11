@@ -4,6 +4,7 @@ from core import State
 from platforms import DataHandler
 from ui.groupdrawer import GroupDrawer
 from ui.menubar import Menubar
+from ui.newgroupdialog import NewGroupDialog
 from ui.progmanwidgets import ProgmanWidget
 from ui.window import Window
 
@@ -19,6 +20,7 @@ class MainWindow(Tk, ProgmanWidget, Window):
         self._data_handler = DataHandler(self.app_state)
         self._is_first_render = True
 
+    # region Properties
     @property
     def app_state(self) -> State:
         return self._state
@@ -26,7 +28,9 @@ class MainWindow(Tk, ProgmanWidget, Window):
     @property
     def group_name(self) -> str:
         return "Program Manager"
+    # endregion
 
+    # region Display
     def render(self) -> None:
         Window.render(self)
         self._render_menubar()
@@ -35,9 +39,9 @@ class MainWindow(Tk, ProgmanWidget, Window):
         self.update_theme()
         ProgmanWidget.render(self)
         self._icon_drawer.set_initial_geometry()
-        self.bind("<Map>", self._on_deiconify)
-        self.bind("<Unmap>", self._on_iconify)
         if self._is_first_render:
+            self.bind("<Map>", self._on_deiconify)
+            self.bind("<Unmap>", self._on_iconify)
             self._icon_drawer.restore_last_windows()
             self._is_first_render = False
 
@@ -62,7 +66,9 @@ class MainWindow(Tk, ProgmanWidget, Window):
     def update_theme(self) -> None:
         self.configure(bg=self.theme.background)
         ProgmanWidget.update_theme(self)
+    # endregion
 
+    # region Actions
     def save(self) -> None:
         self._data_handler.save()
 
@@ -84,3 +90,9 @@ class MainWindow(Tk, ProgmanWidget, Window):
             Window.update_configuration(self, event)
             corrected_geometry = f"{self.winfo_width()}x{self.winfo_height() + 20}+{self.winfo_x()}+{self.winfo_y()}"
             self.app_state.main_window_geometry = corrected_geometry
+
+    def show_new_group_dialogue(self) -> None:
+        dialog = NewGroupDialog(self)
+        if dialog.result:
+            self._icon_drawer.create_new_group(dialog.result)
+    # endregion
