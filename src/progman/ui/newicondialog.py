@@ -108,8 +108,11 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self.iconphoto(False, self._icon)
 
     def _validate_name(self, new_value: str) -> bool:
-        if len(new_value) > 64:
+        stripped_new_value = new_value.strip()
+        if len(stripped_new_value) > 64:
             self._name_feedback.config(text=self._nokay)
+            return False
+        elif (len(new_value) and not len(stripped_new_value)):
             return False
         if len(new_value):
             self._name_feedback.config(text=self._okay)
