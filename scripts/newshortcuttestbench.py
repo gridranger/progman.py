@@ -1,6 +1,6 @@
 from tkinter import Tk
 
-from core import State, Language
+from core import State
 from ui.newicondialog import NewIconDialog
 
 

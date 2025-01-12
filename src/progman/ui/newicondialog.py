@@ -1,7 +1,8 @@
+from collections.abc import Callable
 from pathlib import Path
-from tkinter import Entry, Frame, LEFT, Label, Button, Toplevel, ACTIVE
+from tkinter import ACTIVE, Button, Entry, Frame, Label, Tk, Toplevel
 from tkinter.simpledialog import Dialog
-from typing import Callable, Literal
+from typing import Literal
 
 from assets import asset_storage
 from ui.progmanwidgets import ProgmanWidget
@@ -12,7 +13,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         Reason: The body frame should grid geometry manager rather than pack.
     """
 
-    def __init__(self, parent, title: str) -> None:
+    def __init__(self, parent: Tk, title: str) -> None:
         ProgmanWidget.__init__(self, "new_icon_window")
         Toplevel.__init__(self, parent)
         self._basic_kwargs = {"padx": 5, "pady": 5}
@@ -56,13 +57,13 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self.wait_window(self)
 
     # region tkinter legacy
-    def _setup_dialog(self):
+    def _setup_dialog(self) -> None:
         if self._windowingsystem == "aqua":
             self.tk.call("::tk::unsupported::MacWindowStyle", "style", self, "moveableModal", "")
         elif self._windowingsystem == "x11":
             self.wm_attributes(type="dialog")
 
-    def _place_window(self, parent=None):
+    def _place_window(self, parent: Tk = None) -> None:
         self.wm_withdraw()  # Remain invisible while we figure out the geometry
         self.update_idletasks()  # Actualize geometry information
         minwidth = self.winfo_reqwidth()
@@ -85,7 +86,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
             x = (self.winfo_screenwidth() - minwidth) // 2
             y = (self.winfo_screenheight() - minheight) // 2
         self.wm_maxsize(maxwidth, maxheight)
-        self.wm_geometry('+%d+%d' % (x, y))
+        self.wm_geometry('+%d+%d' % (x, y))  # noqa: UP031
         self.wm_deiconify()
     # endregion
 
@@ -101,7 +102,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._target_path_input = self._get_input(self._validate_target_path, "focusout", 1)
         self._target_path_feedback = self._get_feedback_label(1)
         self._arguments_label = self._get_default_label("arguments", 2)
-        self._arguments_input = self._get_input(lambda new_value: True, "focusout",2)
+        self._arguments_input = self._get_input(lambda new_value: True, "focusout", 2)
         self._arguments_feedback = self._get_feedback_label(2, optional=True)
         self._working_directory_label = self._get_default_label("working_directory", 3)
         self._working_directory_input = self._get_input(self._validate_workdir_path, "focusout", 3)
@@ -118,7 +119,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         if len(stripped_new_value) > 64:
             self._name_feedback.config(text=self._nokay)
             return False
-        elif (len(new_value) and not len(stripped_new_value)):
+        if (len(new_value) and not len(stripped_new_value)):
             return False
         if len(new_value):
             self._name_feedback.config(text=self._okay)
@@ -129,7 +130,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
     def _validate_target_path(self, new_value: str) -> bool:
         return self._validate_path(new_value, self._target_path_feedback)
 
-    def _validate_path(self, new_value: str, feedback_widget: Label):
+    def _validate_path(self, new_value: str, feedback_widget: Label) -> bool:
         if not len(new_value):
             feedback_widget.config(text=self._eyes)
             return True
@@ -145,7 +146,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
 
     def _get_default_label(self, key: str, row: int) -> Label:
         new_label = Label(self._settings_frame, text=self.get_label(key),
-                                 bg=self.theme.background, fg=self.theme.foreground)
+                          bg=self.theme.background, fg=self.theme.foreground)
         new_label.grid(column=0, row=row, sticky="w", **self._basic_kwargs)
         return new_label
 
