@@ -18,6 +18,7 @@ class Language:
             "title": "New group"
         },
         "new_icon_window": {
+            "arguments": "Arguments:",
             "browse": "Browse...",
             "cancel": "Cancel",
             "change_icon": "Change icon...",

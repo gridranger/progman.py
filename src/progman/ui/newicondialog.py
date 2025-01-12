@@ -28,6 +28,9 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._target_path_label = None
         self._target_path_input = None
         self._target_path_feedback = None
+        self._arguments_label = None
+        self._arguments_input = None
+        self._arguments_feedback = None
         self._working_directory_label = None
         self._working_directory_input = None
         self._working_directory_feedback = None
@@ -39,7 +42,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._eyes = "👀"
         self._okay = "👍"
         self._nokay = "🚫"
-        self._font = ("Arial",)
+        self._font = ("Segoe UI Emoji",)
         body = Frame(self)
         self.initial_focus = self.body(body)
         body.grid(**self._basic_kwargs)
@@ -97,9 +100,12 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._target_path_label = self._get_default_label("target_path", 1)
         self._target_path_input = self._get_input(self._validate_target_path, "focusout", 1)
         self._target_path_feedback = self._get_feedback_label(1)
-        self._working_directory_label = self._get_default_label("working_directory", 2)
-        self._working_directory_input = self._get_input(self._validate_workdir_path, "focusout", 2)
-        self._working_directory_feedback = self._get_feedback_label(2)
+        self._arguments_label = self._get_default_label("arguments", 2)
+        self._arguments_input = self._get_input(lambda new_value: True, "focusout",2)
+        self._arguments_feedback = self._get_feedback_label(2, optional=True)
+        self._working_directory_label = self._get_default_label("working_directory", 3)
+        self._working_directory_input = self._get_input(self._validate_workdir_path, "focusout", 3)
+        self._working_directory_feedback = self._get_feedback_label(3)
         self._settings_frame.grid(column=0, row=0, **self._basic_kwargs)
         return self._name_input
 
@@ -149,8 +155,9 @@ class NewIconDialog(Dialog, ProgmanWidget):
         new_input.grid(column=1, row=row, **self._basic_kwargs)
         return new_input
 
-    def _get_feedback_label(self, row: int) -> Label:
-        new_label = Label(self._settings_frame, text=self._eyes, bg=self.theme.background, font=self._font)
+    def _get_feedback_label(self, row: int, optional: bool = False) -> Label:
+        content = self._okay if optional else self._eyes
+        new_label = Label(self._settings_frame, text=content, bg=self.theme.background, font=self._font)
         new_label.grid(column=2, row=row, **self._basic_kwargs)
         return new_label
 
