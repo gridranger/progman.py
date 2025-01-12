@@ -41,6 +41,10 @@ class Shortcut:
         return [self.target_path] + self.arguments.split()
 
     def __eq__(self, other: "Shortcut") -> bool:
+        if name == "nt":
+            return (self.target_path.lower() == other.target_path.lower() and
+                    self.arguments == other.arguments and
+                    self.workdir_path.lower() == other.workdir_path.lower())
         return (self.target_path == other.target_path and
                 self.arguments == other.arguments and
                 self.workdir_path == other.workdir_path)
