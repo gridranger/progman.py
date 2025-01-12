@@ -1,11 +1,22 @@
 from collections.abc import Callable
+from dataclasses import dataclass
 from pathlib import Path
-from tkinter import ACTIVE, Button, Entry, Frame, Label, Tk, Toplevel
+from tkinter import Button, Entry, Frame, Label, Tk, Toplevel, HORIZONTAL
+from tkinter.constants import ACTIVE
 from tkinter.simpledialog import Dialog
+from tkinter.ttk import Separator
 from typing import Literal
 
 from assets import asset_storage
 from ui.progmanwidgets import ProgmanWidget
+
+
+@dataclass
+class ButtonData:
+    label: str
+    command: Callable
+    row: int
+    state: Literal["active", "normal", "disabled"] = "normal"
 
 
 class NewIconDialog(Dialog, ProgmanWidget):
@@ -36,7 +47,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._working_directory_input = None
         self._working_directory_feedback = None
         self._icon_preview_frame = None
-        self._okay_button = None
+        self._ok_button = None
         self._cancel_button = None
         self._browse_button = None
         self._change_icon_button = None
@@ -137,6 +148,8 @@ class NewIconDialog(Dialog, ProgmanWidget):
         value_as_path = Path(new_value)
         if value_as_path.exists():
             feedback_widget.config(text=self._okay)
+            if value_as_path.suffix:
+                self._load_icon()
             return True
         feedback_widget.config(text=self._nokay)
         return False
@@ -162,12 +175,28 @@ class NewIconDialog(Dialog, ProgmanWidget):
         new_label.grid(column=2, row=row, **self._basic_kwargs)
         return new_label
 
+    def _load_icon(self):
+        pass
+
     def buttonbox(self) -> None:
+
+        buttons = [
+            ButtonData("ok", self.ok, 0, ACTIVE),
+            ButtonData("cancel", self.cancel, 1),
+            ButtonData("change_icon", self._browse_icon, 3)
+        ]
         self._button_box = Frame(self, bg=self.theme.background)
-        self._ok_button = Button(self._button_box, text=self.get_label("ok"), width=10, command=self.ok, default=ACTIVE,
-                                 bg=self.theme.background, fg=self.theme.foreground)
-        self._ok_button.grid(column=0, row=0, padx=5, pady=5)
-        self._cancel_button = Button(self._button_box, text=self.get_label("cancel"), width=10, command=self.cancel,
-                                     bg=self.theme.background, fg=self.theme.foreground)
-        self._cancel_button.grid(column=0, row=1, padx=5, pady=5)
+        separator = Separator(self._button_box, orient=HORIZONTAL)
+        separator.grid(column=0, row=2, padx=10, pady=5, sticky='ew')
+        for button in buttons:
+            self._generate_button(button)
         self._button_box.grid(column=1, row=0)
+
+    def _generate_button(self, data: ButtonData) -> None:
+        new_button = Button(self._button_box, text=self.get_label(data.label), width=10, command=data.command,
+                            default=data.state, bg=self.theme.background, fg=self.theme.foreground)
+        new_button.grid(column=0, row=data.row, padx=5, pady=5)
+        setattr(self, f"_{data.label}_button", new_button)
+
+    def _browse_icon(self):
+        pass
