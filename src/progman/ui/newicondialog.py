@@ -208,7 +208,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         new_label.grid(column=2, row=row, **self._basic_kwargs)
         return new_label
 
-    def _load_icon(self):
+    def _load_icon(self) -> None:
         pass
 
     def buttonbox(self) -> None:
@@ -232,8 +232,8 @@ class NewIconDialog(Dialog, ProgmanWidget):
         new_button.grid(column=0, row=data.row, padx=5, pady=5)
         setattr(self, f"_{data.label}_button", new_button)
 
-    def _browse_target(self):
+    def _browse_target(self) -> None:
         pass
 
-    def _browse_icon(self):
+    def _browse_icon(self) -> None:
         pass
