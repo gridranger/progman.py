@@ -1,4 +1,4 @@
-# progman.py - A Program Manager reimplementation in Python
+# progman.py
 
 Launcher inspired by progman.exe from Win 3.1.
 
