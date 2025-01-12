@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from os import name
 from pathlib import Path
 
 
@@ -45,4 +46,6 @@ class Shortcut:
                 self.workdir_path == other.workdir_path)
 
     def __hash__(self) -> int:
-        return hash(self.target_path + self.arguments + self.workdir_path)
+        target_path = self.target_path.lower() if name == "nt" else self.target_path
+        workdir_path = self.workdir_path.lower() if name == "nt" else self.workdir_path
+        return hash(target_path + self.arguments + workdir_path)
