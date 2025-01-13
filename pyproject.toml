@@ -22,7 +22,7 @@ ignore = ["E501", "W504"]
 max-complexity = 10
 
 [tool.pytest.ini_options]
-addopts = "--cov=progman --cov-report=term-missing:skip-covered"
+addopts = "--cov=src --cov=test --cov-report=term-missing:skip-covered"
 pythonpath = ["src/progman"]
 testpaths = ["test"]
 
@@ -31,3 +31,6 @@ exclude = [".venv", "scripts"]
 lint.ignore = ["E501"]
 lint.select = ["E", "F", "W", "C901", "I", "N", "UP", "YTT", "ANN", "SLF", "RET", "TC", "PTH"]
 preview = true
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["SLF001"]
