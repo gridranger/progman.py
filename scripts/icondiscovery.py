@@ -1,14 +1,14 @@
 import sys
 sys.path.append(r"C:\Users\bardo\repos\progman\src")
 
-from pathlib import Path
-from tkinter import Label, Tk
-from winreg import HKEY_CLASSES_ROOT, OpenKey, QueryValueEx
+from pathlib import Path  # noqa: E402
+from tkinter import Label, Tk  # noqa: E402
+from winreg import HKEY_CLASSES_ROOT, OpenKey, QueryValueEx  # noqa: E402
 
-from PIL import Image
-from PIL.ImageTk import PhotoImage
+from PIL import Image  # noqa: E402
+from PIL.ImageTk import PhotoImage  # noqa: E402
 
-from progman.platforms.windowsiconloader import WindowsIconLoader
+from progman.platforms.windowsiconloader import WindowsIconLoader  # noqa: E402
 
 
 def test_load_exe_and_dll() -> None:
@@ -56,6 +56,7 @@ def test_load_txt() -> None:
     label = Label(root, image=icon)
     label.pack(pady=20, padx=20)
     root.mainloop()
+
 
 def test_load_ico() -> None:
     root = Tk()

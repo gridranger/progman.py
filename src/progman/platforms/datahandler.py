@@ -68,8 +68,13 @@ class DataHandler:
 
     def _serialize_groups(self) -> dict[str, tuple[str, bool]]:
         result = {"Program Manager": (self._state.main_window_geometry, True)}
+        skipped_groups = [name for name, group in self._state.groups.items() if group.is_empty]
         for group_window in self._state.group_windows.values():
+            if group_window.group_name in skipped_groups:
+                continue
             result[group_window.group_name] = (group_window.geometry(), True)
         for group_name, geometry in self._state.suspended_group_windows.items():
+            if group_name in skipped_groups:
+                continue
             result[group_name] = (geometry, False)
         return result

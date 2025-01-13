@@ -1,4 +1,5 @@
-from core.tags import Tags
+
+from core import Group, Tags
 from ui.groupicon import GroupIcon
 from ui.groupwindow import GroupWindow
 from ui.icondrawer import IconDrawer
@@ -11,12 +12,21 @@ class GroupDrawer(IconDrawer):
         IconDrawer.__init__(self, parent)
         self.viewPort.launch_child_window = self.launch_child_window
 
+    def create_new_group(self, group_name: str) -> None:
+        self.app_state.add_group(Group(group_name))
+        self._add_icon(group_name)
+        self._icons[-1].render()
+        self._arrange_icons()
+
     def _render_icons(self) -> None:
         for group_name, group in self.app_state.groups.items():
-            if group_name in self.DISABLED_GROUPS or group.is_empty:
+            if group_name in self.DISABLED_GROUPS:
                 continue
-            icon = GroupIcon(self.viewPort, group_name)
-            self._icons.append(icon)
+            self._add_icon(group_name)
+
+    def _add_icon(self, group_name: str) -> None:
+        icon = GroupIcon(self.viewPort, group_name)
+        self._icons.append(icon)
 
     def launch_child_window(self, group_name: str) -> None:
         if group_name in self.app_state.group_windows:
