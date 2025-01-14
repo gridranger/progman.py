@@ -18,6 +18,7 @@ class Language:
             "title": "New group"
         },
         "new_icon_window": {
+            "all_files": "All files",
             "arguments": "Arguments:",
             "browse": "Browse...",
             "cancel": "Cancel",

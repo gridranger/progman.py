@@ -2,12 +2,14 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from tkinter import Button, Entry, Frame, Label, Tk, Toplevel
-from tkinter.constants import DISABLED, HORIZONTAL, NORMAL
+from tkinter.constants import DISABLED, END, HORIZONTAL, NORMAL
+from tkinter.filedialog import askopenfilename
 from tkinter.simpledialog import Dialog
 from tkinter.ttk import Separator
 from typing import Literal
 
 from assets import asset_storage
+from platforms import IconLoader
 from ui.progmanwidgets import ProgmanWidget
 
 
@@ -46,7 +48,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._working_directory_label = None
         self._working_directory_input = None
         self._working_directory_feedback = None
-        self._icon_preview_frame = None
+        self._icon_preview = None
         self._ok_button = None
         self._cancel_button = None
         self._browse_button = None
@@ -119,8 +121,8 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._working_directory_label = self._get_default_label("working_directory", 3)
         self._working_directory_input = self._get_input(self._validate_workdir_path, "focusout", 3)
         self._working_directory_feedback = self._get_feedback_label(3)
-        self._icon_preview_frame = Label(self._settings_frame, image=asset_storage["new"], bg=self.theme.background)
-        self._icon_preview_frame.grid(column=0, row=4, **self._basic_kwargs)
+        self._icon_preview = Label(self._settings_frame, image=asset_storage["new"], bg=self.theme.background)
+        self._icon_preview.grid(column=0, row=4, **self._basic_kwargs)
         self._settings_frame.grid(column=0, row=0, **self._basic_kwargs)
         return self._name_input
 
@@ -197,7 +199,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         return new_label
 
     def _get_input(self, validation_method: Callable, validate: Literal["key", "focusout"], row: int) -> Entry:
-        new_input = Entry(self._settings_frame, bg=self.theme.background, fg=self.theme.foreground,
+        new_input = Entry(self._settings_frame, bg=self.theme.background, fg=self.theme.foreground, width=40,
                           validate=validate, validatecommand=(self.register(validation_method), "%P"))
         new_input.grid(column=1, row=row, **self._basic_kwargs)
         return new_input
@@ -212,7 +214,6 @@ class NewIconDialog(Dialog, ProgmanWidget):
         pass
 
     def buttonbox(self) -> None:
-
         buttons = [
             ButtonData("ok", self.ok, 0, DISABLED),
             ButtonData("cancel", self.cancel, 1),
@@ -233,7 +234,24 @@ class NewIconDialog(Dialog, ProgmanWidget):
         setattr(self, f"_{data.label}_button", new_button)
 
     def _browse_target(self) -> None:
-        pass
+        target_path = askopenfilename(defaultextension=".*", filetypes=[(self.get_label("all_files"), "*.*")])
+        if target_path:
+            self._target_path_input.delete(0, END)
+            target_as_path_object = Path(target_path)   # Path(target_path) will show '\' in the path in Windows instead of '/' that python would use natively.
+            self._target_path_input.insert(0, target_as_path_object)
+            self._validate_target_path(str(target_as_path_object))
+            if self._working_directory_input.get() == "":
+                self._working_directory_input.insert(0, target_as_path_object.parent)
+                self._validate_workdir_path(str(target_as_path_object.parent))
+            if self._name_input.get() == "":
+                new_name = target_as_path_object.name
+                if new_name.lower().endswith(".exe"):
+                    new_name = new_name[:-4]
+                self._name_input.insert(0, new_name)
+                self._validate_name(new_name)
+            icon = IconLoader.load(target_path)
+            asset_storage.store_icon(target_path, 0, icon)
+            self._icon_preview.configure(image=icon)
 
     def _browse_icon(self) -> None:
         pass

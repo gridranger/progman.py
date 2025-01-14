@@ -19,14 +19,19 @@ class WindowsIconLoader:
     }
 
     @classmethod
-    def load(cls, shortcut: Shortcut) -> PhotoImage:
-        path = Path(shortcut.icon)
+    def load(cls, shortcut: Shortcut | str) -> PhotoImage:
+        try:
+            path = Path(shortcut.icon)
+            index = shortcut.icon_index
+        except AttributeError:
+            path = Path(shortcut)
+            index = 0
         extension = path.suffix.lower()[1:]
         resolver_name = f"_load_from_{extension}"
         if hasattr(cls, resolver_name):
-            result = getattr(cls, resolver_name)(shortcut.icon, shortcut.icon_index)
+            result = getattr(cls, resolver_name)(str(path), index)
         else:
-            result = cls._load_icon_from_default_app(shortcut.icon, shortcut.icon_index)
+            result = cls._load_icon_from_default_app(str(path), index)
         return result
 
     @staticmethod
