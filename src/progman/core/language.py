@@ -27,6 +27,7 @@ class Language:
             "name": "Name:",
             "new_icon": "New icon properties",
             "ok": "OK",
+            "program_group": "Program group:",
             "target_path": "Target path:",
             "working_directory": "Working directory:"
         },

@@ -1,11 +1,11 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
-from tkinter import Button, Entry, Frame, Label, Tk, Toplevel
+from tkinter import Button, Entry, Frame, Label, StringVar, Tk, Toplevel
 from tkinter.constants import DISABLED, END, HORIZONTAL, NORMAL
 from tkinter.filedialog import askopenfilename
 from tkinter.simpledialog import Dialog
-from tkinter.ttk import Separator
+from tkinter.ttk import Combobox, Separator
 from typing import Literal
 
 from assets import asset_storage
@@ -51,6 +51,9 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._working_directory_feedback = None
         self._icon_path = ""
         self._icon_preview = None
+        self._selected_group = StringVar()
+        self._program_group_label = None
+        self._program_group_dropdown = None
         self._ok_button = None
         self._cancel_button = None
         self._browse_button = None
@@ -123,8 +126,13 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._working_directory_label = self._get_default_label("working_directory", 3)
         self._working_directory_input = self._get_input(self._validate_workdir_path, "focusout", 3)
         self._working_directory_feedback = self._get_feedback_label(3)
+        self._program_group_label = self._get_default_label("program_group", 4)
+        options = list(self.app_state.groups.keys())
+        self._program_group_dropdown = Combobox(self._settings_frame, textvariable=self._selected_group, values=options,
+                                                width=37)
+        self._program_group_dropdown.grid(column=1, row=4, **self._basic_kwargs)
         self._icon_preview = Label(self._settings_frame, image=asset_storage["new"], bg=self.theme.background)
-        self._icon_preview.grid(column=0, row=4, **self._basic_kwargs)
+        self._icon_preview.grid(column=0, row=5, **self._basic_kwargs)
         self._settings_frame.grid(column=0, row=0, **self._basic_kwargs)
         return self._name_input
 
@@ -234,7 +242,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         separator.grid(column=0, row=2, padx=10, pady=5, sticky='ew')
         for button in buttons:
             self._generate_button(button)
-        self._button_box.grid(column=1, row=0, **self._basic_kwargs)
+        self._button_box.grid(column=1, row=0, **self._basic_kwargs, sticky="n")
 
     def _generate_button(self, data: ButtonData) -> None:
         new_button = Button(self._button_box, text=self.get_label(data.label), width=12, command=data.command,
@@ -260,7 +268,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
                 self._validate_name(new_name)
             self._load_icon(target_path)
 
-    def _load_icon(self, path: str):
+    def _load_icon(self, path: str) -> None:
         icon = IconLoader.load(path)
         asset_storage.store_icon(path, 0, icon)
         self._icon_preview.configure(image=icon)
@@ -289,5 +297,6 @@ class NewIconDialog(Dialog, ProgmanWidget):
             workdir_path=self._arguments_input.get().strip(),
             separate_icon_path=self._icon_path,
             name=self._name_input.get().strip(),
-            created_by_user=True
+            created_by_user=True,
+            tags=[self._selected_group.get()]
         )
