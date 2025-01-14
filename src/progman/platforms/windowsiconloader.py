@@ -49,7 +49,10 @@ class WindowsIconLoader:
         bitmap.CreateCompatibleBitmap(device_context, size, size)
         memory_device_context = device_context.CreateCompatibleDC()
         memory_device_context.SelectObject(bitmap)
-        memory_device_context.DrawIcon((0, 0), normal[0])
+        try:
+            memory_device_context.DrawIcon((0, 0), normal[0])
+        except IndexError:
+            return asset_storage["blank"]
         bits = bitmap.GetBitmapBits(True)
         image = Image.frombuffer('RGBA', (32, 32), bits, 'raw', 'BGRA', 0, 1)
         icon = ImageTk.PhotoImage(image)
@@ -70,6 +73,8 @@ class WindowsIconLoader:
         icon = PhotoImage(resized_image)
         asset_storage.store_icon(path, icon_index, icon)
         return icon
+
+    _load_from_bmp = _load_from_jpg = _load_from_jpeg = _load_from_png = _load_from_ico
 
     @classmethod
     def _load_icon_from_default_app(cls, path: str, icon_index: int) -> PhotoImage:

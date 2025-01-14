@@ -156,6 +156,11 @@ class NewIconDialog(Dialog, ProgmanWidget):
             self._ok_button.configure(state=DISABLED)
 
     def _validate_target_path(self, new_value: str) -> bool:
+        if '"' in new_value:
+            cleaned_value = new_value.replace('"', "")
+            self._target_path_input.delete(0, END)
+            self._target_path_input.insert(0, cleaned_value)
+            return self._validate_target_path(cleaned_value)
         okay_validity = False
         field_validity = False
         stripped_new_value = new_value
@@ -165,7 +170,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
             field_validity = True
         elif value_as_path.is_file():
             self._target_path_feedback.config(text=self._okay)
-            self._load_icon()
+            self._load_icon(str(value_as_path))
             okay_validity = True
             field_validity = True
         else:
@@ -175,6 +180,11 @@ class NewIconDialog(Dialog, ProgmanWidget):
         return field_validity
 
     def _validate_workdir_path(self, new_value: str) -> bool:
+        if '"' in new_value:
+            cleaned_value = new_value.replace('"', "")
+            self._working_directory_input.delete(0, END)
+            self._working_directory_input.insert(0, cleaned_value)
+            return self._validate_workdir_path(cleaned_value)
         okay_validity = False
         field_validity = False
         stripped_new_value = new_value
@@ -209,9 +219,6 @@ class NewIconDialog(Dialog, ProgmanWidget):
         new_label = Label(self._settings_frame, text=content, bg=self.theme.background, font=self._font)
         new_label.grid(column=2, row=row, **self._basic_kwargs)
         return new_label
-
-    def _load_icon(self) -> None:
-        pass
 
     def buttonbox(self) -> None:
         buttons = [
@@ -249,9 +256,22 @@ class NewIconDialog(Dialog, ProgmanWidget):
                     new_name = new_name[:-4]
                 self._name_input.insert(0, new_name)
                 self._validate_name(new_name)
-            icon = IconLoader.load(target_path)
-            asset_storage.store_icon(target_path, 0, icon)
-            self._icon_preview.configure(image=icon)
+            self._load_icon(target_path)
+
+    def _load_icon(self, path: str):
+        icon = IconLoader.load(path)
+        asset_storage.store_icon(path, 0, icon)
+        self._icon_preview.configure(image=icon)
 
     def _browse_icon(self) -> None:
-        pass
+        extensions = [
+            ("Icon", "*.ico"),
+            ("PNG", "*.png"),
+            ("JPG", "*.jpg"),
+            ("JPEG", "*.jpeg"),
+            ("BMP", "*.bmp"),
+            (self.get_label("all_files"), "*.*")
+        ]
+        icon_path = askopenfilename(defaultextension=".*", filetypes=extensions)
+        if icon_path:
+            self._load_icon(icon_path)
