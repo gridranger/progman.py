@@ -9,6 +9,7 @@ from tkinter.ttk import Separator
 from typing import Literal
 
 from assets import asset_storage
+from core import Shortcut
 from platforms import IconLoader
 from ui.progmanwidgets import ProgmanWidget
 
@@ -48,6 +49,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._working_directory_label = None
         self._working_directory_input = None
         self._working_directory_feedback = None
+        self._icon_path = ""
         self._icon_preview = None
         self._ok_button = None
         self._cancel_button = None
@@ -274,4 +276,18 @@ class NewIconDialog(Dialog, ProgmanWidget):
         ]
         icon_path = askopenfilename(defaultextension=".*", filetypes=extensions)
         if icon_path:
+            self._icon_path = icon_path
             self._load_icon(icon_path)
+
+    def validate(self) -> bool:
+        return all([value for value in self._validity.values()])
+
+    def apply(self) -> None:
+        self.result = Shortcut(
+            target_path=self._target_path_input.get().strip(),
+            arguments=self._arguments_input.get().strip(),
+            workdir_path=self._arguments_input.get().strip(),
+            separate_icon_path=self._icon_path,
+            name=self._name_input.get().strip(),
+            created_by_user=True
+        )
