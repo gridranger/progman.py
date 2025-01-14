@@ -2,11 +2,9 @@ from typing import TYPE_CHECKING
 
 from core.group import Group
 from core.language import Language
+from core.shortcut import Shortcut
 from core.tags import Tags
 from core.theme import Theme
-
-if TYPE_CHECKING:
-    from .shortcut import Shortcut
 
 
 class State:
@@ -33,3 +31,8 @@ class State:
     def add_group(self, group: Group) -> None:
         geometry = f"{group.size[0]}x{group.size[1]}+{group.position[0]}+{group.position[1]}"
         self._groups[group.name] = Group(group.name, group.is_collapsed, geometry)
+
+    def add_shortcut(self, new_item: Shortcut):
+        self.shortcuts.append(new_item)
+        for tag in new_item.tags:
+            self._groups[tag].append(new_item)

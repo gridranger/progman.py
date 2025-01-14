@@ -1,5 +1,6 @@
 from tkinter import Event, Misc, Toplevel
 
+from core import Shortcut
 from ui.appdrawer import AppDrawer
 from ui.progmanwidgets import ProgmanWidget
 from ui.window import Window
@@ -41,3 +42,6 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
     def update_theme(self) -> None:
         self.configure(bg=self.theme.background)
         ProgmanWidget.update_theme(self)
+
+    def add_icon(self, new_shortcut: Shortcut):
+        self._icon_drawer.add_icon(new_shortcut)

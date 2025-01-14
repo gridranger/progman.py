@@ -5,6 +5,7 @@ from platforms import DataHandler
 from ui.groupdrawer import GroupDrawer
 from ui.menubar import Menubar
 from ui.newgroupdialog import NewGroupDialog
+from ui.newicondialog import NewIconDialog
 from ui.progmanwidgets import ProgmanWidget
 from ui.window import Window
 
@@ -91,8 +92,16 @@ class MainWindow(Tk, ProgmanWidget, Window):
             corrected_geometry = f"{self.winfo_width()}x{self.winfo_height() + 20}+{self.winfo_x()}+{self.winfo_y()}"
             self.app_state.main_window_geometry = corrected_geometry
 
-    def show_new_group_dialogue(self) -> None:
+    def show_new_group_dialog(self) -> None:
         dialog = NewGroupDialog(self)
         if dialog.result:
             self._icon_drawer.create_new_group(dialog.result)
+
+    def show_new_icon_dialog(self) -> None:
+        dialog = NewIconDialog(self, "new_icon")
+        if dialog.result:
+            self.app_state.add_shortcut(dialog.result)
+            for tag in dialog.result.tags:
+                group = self.app_state.group_windows[tag]
+                group.add_icon(dialog.result)
     # endregion

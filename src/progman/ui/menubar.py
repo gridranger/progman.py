@@ -12,7 +12,7 @@ class Menubar(Menu, ProgmanWidget):
         self._raw_menu_data = {
             "file": [
                 {"label": "new_group", "command": self._new_group, "state": "normal"},
-                {"label": "new_icon", "command": self.master.save, "state": "disabled"},
+                {"label": "new_icon", "command": self._new_icon, "state": "normal"},
                 {"separator": True},
                 {"label": "save", "command": self.master.save, "state": "normal"},
                 {"separator": True},
@@ -50,4 +50,7 @@ class Menubar(Menu, ProgmanWidget):
         ProgmanWidget.update_language(self)
 
     def _new_group(self) -> None:
-        self.master.show_new_group_dialogue()
+        self.master.show_new_group_dialog()
+
+    def _new_icon(self) -> None:
+        self.master.show_new_icon_dialog()
