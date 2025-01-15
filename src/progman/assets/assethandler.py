@@ -35,7 +35,3 @@ class AssetHandler:
         key = f"{key}-{icon_id}"
         if not self._content.get(key):
             self._content[key] = image
-
-
-class ResourceDuplicationError(RuntimeError):
-    pass

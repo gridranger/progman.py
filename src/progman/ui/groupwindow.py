@@ -43,5 +43,5 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
         self.configure(bg=self.theme.background)
         ProgmanWidget.update_theme(self)
 
-    def add_icon(self, new_shortcut: Shortcut):
+    def add_icon(self, new_shortcut: Shortcut) -> None:
         self._icon_drawer.add_icon(new_shortcut)

@@ -33,4 +33,4 @@ lint.select = ["E", "F", "W", "C901", "I", "N", "UP", "YTT", "ANN", "SLF", "RET"
 preview = true
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["SLF001"]
+"test/**/*.py" = ["SLF", "ANN"]

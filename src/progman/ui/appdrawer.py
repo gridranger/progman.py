@@ -16,7 +16,7 @@ class AppDrawer(IconDrawer):
             if self._category in shortcut.tags:
                 self._icons.append(AppIcon(shortcut, self.viewPort))
 
-    def add_icon(self, shortcut: Shortcut):
+    def add_icon(self, shortcut: Shortcut) -> None:
         self._icons.append(AppIcon(shortcut, self.viewPort))
         self._icons[-1].render()
         self._arrange_icons()
