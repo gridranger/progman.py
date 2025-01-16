@@ -18,7 +18,7 @@ class QualityGate:
         else:
             info("All checks passed. 🙂")
 
-    def check_step(self, step_name: str , command: list[str]):
+    def check_step(self, step_name: str, command: list[str]):
         result = run(command, text=True)
         if result.returncode > 0:
             self._failed.append(step_name)
