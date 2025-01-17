@@ -4,6 +4,8 @@ class Language:
         "root": {"title": "Program Manager"},
         "menu_bar": {
             "arrange_abc": "🔤 Arrange alphabetically",
+            "cascade": "Cascade",
+            "exit": "🚪 Exit",
             "file": "File",
             "minimize_on_use": "🔽 Minimize on use",
             "new_group": "📂 New group",
@@ -11,7 +13,9 @@ class Language:
             "options": "Options",
             "save": "💾 Save",
             "show_windows_on_tray": "🪟 Show windows on tray",
-            "exit": "🚪 Exit"
+            "tile": "Tile",
+            "window": "Window",
+            "window_list": "Window list"
         },
         "icon": {},
         "icon_drawer": {},

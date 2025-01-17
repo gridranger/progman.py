@@ -23,6 +23,10 @@ class Menubar(Menu, ProgmanWidget):
                 MenuItem("minimize_on_use", self._toggle_minimize_on_use, "disabled", toggle=True),
                 MenuItem("arrange_abc", self._toggle_arrange_alphabetically, "disabled", True),
                 MenuItem("show_windows_on_tray", self._toggle_show_windows_on_tray, "disabled", True)
+            ],
+            "window": [
+                MenuItem("cascade", state="disabled"),
+                MenuItem("tile", state="disabled")
             ]
         }
         self._toggles = {}
