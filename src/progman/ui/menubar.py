@@ -1,5 +1,7 @@
-from tkinter import Menu
+from tkinter import Menu, BooleanVar
+from tkinter.font import Font
 
+from core import MenuItem
 from ui.progmanwidgets import ProgmanWidget
 
 
@@ -11,29 +13,42 @@ class Menubar(Menu, ProgmanWidget):
         self._menus = {}
         self._raw_menu_data = {
             "file": [
-                {"label": "new_group", "command": self._new_group, "state": "normal"},
-                {"label": "new_icon", "command": self._new_icon, "state": "normal"},
-                {"separator": True},
-                {"label": "save", "command": self.master.save, "state": "normal"},
-                {"separator": True},
-                {"label": "exit", "command": self.quit, "state": "normal"}
+                MenuItem("new_group", self._new_group),
+                MenuItem("new_icon", self._new_icon),
+                MenuItem("separator"),
+                MenuItem("save", self.master.save),
+                MenuItem("separator"),
+                MenuItem("exit", self.quit)
+            ],
+            "options": [
+                MenuItem("minimize_on_use", self._toggle_minimize_on_use, "disabled", toggle=True),
+                MenuItem("arrange_abc", self._toggle_arrange_alphabetically, "disabled", True),
+                MenuItem("show_windows_on_tray", self._toggle_show_windows_on_tray, "disabled", True)
             ]
         }
-        # self.event_add(ProgManEvent.NEW_GROUP, "None")
+        self._toggles = {}
 
     def render(self) -> None:
         for menu_name, menu_data in self._raw_menu_data.items():
             self._menus[menu_name] = Menu(self, tearoff=0)
             for item in menu_data:
-                if "separator" in item:
-                    self._menus[menu_name].add_separator()
+                if item.toggle:
+                    self._render_toggle(menu_name, item)
                 else:
-                    self._menus[menu_name].add_command(
-                        label=self.get_label(item["label"]),
-                        command=item["command"],
-                        state=item["state"]
-                    )
+                    self._render_menu_item(menu_name, item)
             self.add_cascade(label=self.get_label(menu_name), menu=self._menus[menu_name])
+
+    def _render_toggle(self, name: str, item: MenuItem) -> None:
+        self._toggles["label"] = BooleanVar()
+        self._menus[name].add_checkbutton(label=self.get_label(item.label), command=item.command, state=item.state,
+                                                               onvalue=True, offvalue=False,
+                                                               variable=self._toggles["label"])
+
+    def _render_menu_item(self, name: str, item: MenuItem) -> None:
+        if item.label == "separator":
+            self._menus[name].add_separator()
+        else:
+            self._menus[name].add_command(label=self.get_label(item.label), command=item.command, state=item.state)
 
     def _set_file_menu_label(self, *_args: any) -> None:
         self.entryconfig(0, label=self.get_label("file"))
@@ -54,3 +69,12 @@ class Menubar(Menu, ProgmanWidget):
 
     def _new_icon(self) -> None:
         self.master.show_new_icon_dialog()
+
+    def _toggle_minimize_on_use(self):
+        pass
+
+    def _toggle_arrange_alphabetically(self):
+        pass
+
+    def _toggle_show_windows_on_tray(self):
+        pass

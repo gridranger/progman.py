@@ -3,11 +3,15 @@ class Language:
         "language": "en",
         "root": {"title": "Program Manager"},
         "menu_bar": {
+            "arrange_abc": "🔤 Arrange alphabetically",
             "file": "File",
-            "new_group": "New group",
-            "new_icon": "New icon",
-            "save": "Save",
-            "exit": "Exit"
+            "minimize_on_use": "🔽 Minimize on use",
+            "new_group": "📂 New group",
+            "new_icon": "📄 New icon",
+            "options": "Options",
+            "save": "💾 Save",
+            "show_windows_on_tray": "🪟 Show windows on tray",
+            "exit": "🚪 Exit"
         },
         "icon": {},
         "icon_drawer": {},
