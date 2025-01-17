@@ -294,7 +294,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self.result = Shortcut(
             target_path=self._target_path_input.get().strip(),
             arguments=self._arguments_input.get().strip(),
-            workdir_path=self._arguments_input.get().strip(),
+            workdir_path=self._working_directory_input.get().strip(),
             separate_icon_path=self._icon_path,
             name=self._name_input.get().strip(),
             created_by_user=True,
