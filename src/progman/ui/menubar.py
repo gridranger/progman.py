@@ -1,5 +1,4 @@
-from tkinter import Menu, BooleanVar
-from tkinter.font import Font
+from tkinter import BooleanVar, Menu
 
 from core import MenuItem
 from ui.progmanwidgets import ProgmanWidget
@@ -70,11 +69,11 @@ class Menubar(Menu, ProgmanWidget):
     def _new_icon(self) -> None:
         self.master.show_new_icon_dialog()
 
-    def _toggle_minimize_on_use(self):
+    def _toggle_minimize_on_use(self) -> None:
         pass
 
-    def _toggle_arrange_alphabetically(self):
+    def _toggle_arrange_alphabetically(self) -> None:
         pass
 
-    def _toggle_show_windows_on_tray(self):
+    def _toggle_show_windows_on_tray(self) -> None:
         pass
