@@ -16,7 +16,9 @@ class ProgramManager:
         self._root.mainloop()
 
     def _load_os_content(self) -> None:
-        self.app_state.shortcuts = ShortcutCollector().collect_links()
+        shortcut_set = set(self.app_state.shortcuts)
+        shortcut_set.update(ShortcutCollector().collect_links())
+        self.app_state.shortcuts = list(shortcut_set)
         for shortcut in self.app_state.shortcuts:
             Recognizer.categorize(shortcut)
 
