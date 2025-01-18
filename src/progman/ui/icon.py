@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from tkinter import Event, Frame, Label, PhotoImage
+from tkinter import Event, Frame, Label, PhotoImage, Menu
 
 from ui.progmanwidgets import ProgmanWidget
 
@@ -15,6 +15,8 @@ class Icon(ABC, Frame, ProgmanWidget):
         self._icon = None
         self._icon_label: Label | None = None
         self._text_label: Label | None = None
+        self._context_menu = None
+        self._menu_items = []
 
     @property
     @abstractmethod
@@ -48,6 +50,7 @@ class Icon(ABC, Frame, ProgmanWidget):
         for widget in [self, self._icon_label, self._text_label]:
             widget.bind("<Enter>", self.master.on_enter)
             widget.bind("<Leave>", self.master.on_leave)
+        self._render_context_menu()
 
     def on_click(self, _event: Event | None = None) -> None:
         self.select()
@@ -61,3 +64,16 @@ class Icon(ABC, Frame, ProgmanWidget):
     def deselect(self) -> None:
         self._text_label.config(background=self.theme.background,
                                 foreground=self.theme.foreground)
+
+    def _render_context_menu(self) -> None:
+        self._context_menu = Menu(self, tearoff=0)
+        for item in self._menu_items:
+            if item.label == "separator":
+                self._context_menu.add_separator()
+            else:
+                self._context_menu.add_command(label=self.get_label(item.label), command=item.command, state=item.state)
+        self._icon_label.bind("<Button-3>", self._show_context_menu)
+        self._text_label.bind("<Button-3>", self._show_context_menu)
+
+    def _show_context_menu(self, event: Event) -> None:
+        self._context_menu.post(event.x_root, event.y_root)

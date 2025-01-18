@@ -17,7 +17,13 @@ class Language:
             "window": "Window",
             "window_list": "Window list"
         },
-        "icon": {},
+        "icon": {
+            "copy": "Copy",
+            "copy_to": "Copy to...",
+            "move_to": "Move to...",
+            "delete": "Delete",
+            "properties": "Properties..."
+        },
         "icon_drawer": {},
         "new_group_window": {
             "cancel": "Cancel",
