@@ -10,17 +10,21 @@ It is written in Python v3.13 using TkInter to be as lightweight as possible.
 
 ## Features already available
 
-* Organizes the app launcher icons to groups displayed in separate windows.
-* Group windows can be opened and closed on convinience. Their content and size and position are preserved.
+* Organizes the app launcher's (or start menu's) icons to groups displayed in separate windows.
+* Group windows can be opened and closed on convenience. Their content and size and position are preserved.
 * Groups are prepopulated from the OS' own app launcher to save time on icon creation based on rules.
 * App icons can be present in multiple group at the same time.
+* Custom icon creation.
+* Custom group creation.
 
 ## Features on the roadmap
 
+* Editing icons.
+* Context sensitive menus.
 * Changing group membership of icons received from the OS.
-* Custom icon creation.
-* Custom group creation.
 * Tile windows and cascade windows feature.
+* Theming options to use your favourite Win3.1 themes or create your own ones.
+* Multilanguage support.
 
 ## Long term goals include also...
 
