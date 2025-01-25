@@ -22,7 +22,7 @@ ignore = ["E501", "W504"]
 max-complexity = 10
 
 [tool.pytest.ini_options]
-addopts = "--cov=src --cov=test --cov-report=term-missing:skip-covered --cov-fail-under=23"
+addopts = "--cov=src --cov=test --cov-report=term-missing:skip-covered --cov-fail-under=25"
 pythonpath = ["src/progman"]
 testpaths = ["test"]
 
