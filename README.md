@@ -15,12 +15,12 @@ It is written in Python v3.13 using TkInter to be as lightweight as possible.
 * Groups are prepopulated from the OS' own app launcher to save time on icon creation based on rules.
 * App icons can be present in multiple group at the same time.
 * Custom icon creation.
+* Editing icons.
 * Custom group creation.
 
 ## Features on the roadmap
 
-* Editing icons.
-* Context sensitive menus.
+* Context sensitive menus (in progress).
 * Changing group membership of icons received from the OS.
 * Tile windows and cascade windows feature.
 * Theming options to use your favourite Win3.1 themes or create your own ones.
