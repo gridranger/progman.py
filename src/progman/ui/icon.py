@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from tkinter import Event, Frame, Label, PhotoImage, Menu
+from tkinter import Event, Frame, Label, Menu, PhotoImage
 
 from ui.progmanwidgets import ProgmanWidget
 

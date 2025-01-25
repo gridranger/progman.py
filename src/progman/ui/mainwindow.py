@@ -3,9 +3,9 @@ from tkinter import Event, Tk
 from core import State
 from platforms import DataHandler
 from ui.groupdrawer import GroupDrawer
+from ui.iconpropertiesdialog import IconPropertiesDialog
 from ui.menubar import Menubar
 from ui.newgroupdialog import NewGroupDialog
-from ui.iconpropertiesdialog import IconPropertiesDialog
 from ui.progmanwidgets import ProgmanWidget
 from ui.window import Window
 

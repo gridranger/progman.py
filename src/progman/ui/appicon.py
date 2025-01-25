@@ -2,8 +2,7 @@ from subprocess import Popen
 from tkinter import PhotoImage
 from tkinter.constants import DISABLED
 
-from assets import asset_storage
-from core import Shortcut, MenuItem
+from core import MenuItem, Shortcut
 from platforms import IconLoader
 from ui.icon import Icon
 from ui.iconpropertiesdialog import IconPropertiesDialog
@@ -73,6 +72,6 @@ class AppIcon(Icon):
         if any_changes:
             self._shortcut.created_by_user = True
 
-    def _update_icon(self):
+    def _update_icon(self) -> None:
         self._icon = None
         self._icon_label.configure(image=self.icon)
