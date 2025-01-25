@@ -5,7 +5,7 @@ from platforms import DataHandler
 from ui.groupdrawer import GroupDrawer
 from ui.menubar import Menubar
 from ui.newgroupdialog import NewGroupDialog
-from ui.newicondialog import NewIconDialog
+from ui.iconpropertiesdialog import IconPropertiesDialog
 from ui.progmanwidgets import ProgmanWidget
 from ui.window import Window
 
@@ -98,7 +98,7 @@ class MainWindow(Tk, ProgmanWidget, Window):
             self._icon_drawer.create_new_group(dialog.result)
 
     def show_new_icon_dialog(self) -> None:
-        dialog = NewIconDialog(self, "new_icon")
+        dialog = IconPropertiesDialog(self, "new_icon")
         if dialog.result:
             self.app_state.add_shortcut(dialog.result)
             for tag in dialog.result.tags:

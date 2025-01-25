@@ -22,16 +22,17 @@ class ButtonData:
     state: Literal["active", "normal", "disabled"] = "normal"
 
 
-class NewIconDialog(Dialog, ProgmanWidget):
+class IconPropertiesDialog(Dialog, ProgmanWidget):
     """Dialogs __init__ is dropped in favor of its ancestor's one.
         Reason: The body frame should grid geometry manager rather than pack.
     """
 
-    def __init__(self, parent: Tk, title: str) -> None:
+    def __init__(self, parent: Tk | Frame, title: str, shortcut: Shortcut | None = None) -> None:
         ProgmanWidget.__init__(self, "new_icon_window")
         Toplevel.__init__(self, parent)
         self._basic_kwargs = {"padx": 5, "pady": 5}
         self.parent = parent
+        self.shortcut = shortcut
         self.result = None
         self._role = title
         self._icon_name = "blank"
@@ -134,7 +135,19 @@ class NewIconDialog(Dialog, ProgmanWidget):
         self._icon_preview = Label(self._settings_frame, image=asset_storage["new"], bg=self.theme.background)
         self._icon_preview.grid(column=0, row=5, **self._basic_kwargs)
         self._settings_frame.grid(column=0, row=0, **self._basic_kwargs)
+        if self.shortcut:
+            self._fill_fields()
         return self._name_input
+
+    def _fill_fields(self) -> None:
+        self._name_input.insert(0, self.shortcut.name)
+        self._target_path_input.insert(0, self.shortcut.target_path)
+        self._validate_target_path(self.shortcut.target_path)
+        self._arguments_input.insert(0, self.shortcut.arguments)
+        self._working_directory_input.insert(0, self.shortcut.workdir_path)
+        self._validate_workdir_path(self.shortcut.workdir_path)
+        self._selected_group.set(self.shortcut.tags[0])
+        self._load_icon(self.shortcut.icon)
 
     def _render_icon(self) -> None:
         self._icon = asset_storage[self._icon_name]
@@ -160,6 +173,8 @@ class NewIconDialog(Dialog, ProgmanWidget):
         return result
 
     def _update_ok_button(self) -> None:
+        if not self._ok_button:
+            return
         if all([value for value in self._validity.values()]):
             self._ok_button.configure(state=NORMAL)
         else:
@@ -286,6 +301,7 @@ class NewIconDialog(Dialog, ProgmanWidget):
         if icon_path:
             self._icon_path = icon_path
             self._load_icon(icon_path)
+        self._update_ok_button()
 
     def validate(self) -> bool:
         return all([value for value in self._validity.values()])
