@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
-from tkinter import Button, Entry, Frame, Label, StringVar, Tk, Toplevel, Event
+from tkinter import Button, Entry, Event, Frame, Label, StringVar, Tk, Toplevel
 from tkinter.constants import DISABLED, END, HORIZONTAL, NORMAL
 from tkinter.filedialog import askopenfilename
 from tkinter.simpledialog import Dialog
