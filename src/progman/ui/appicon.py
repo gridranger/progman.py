@@ -67,7 +67,7 @@ class AppIcon(Icon):
             self._update_icon()
             any_changes = True
         if new_shortcut.tags[0] not in self._shortcut.tags:
-            self._shortcut.tags.append(new_shortcut.tags[0])
+            self._update_tags(new_shortcut.tags[0])
             any_changes = True
         if any_changes:
             self._shortcut.created_by_user = True
@@ -75,3 +75,7 @@ class AppIcon(Icon):
     def _update_icon(self) -> None:
         self._icon = None
         self._icon_label.configure(image=self.icon)
+
+    def _update_tags(self, new_tag: str) -> None:
+        self._shortcut.tags.append(new_tag)
+        self.app_state.add_shortcut_to_new_group(self._shortcut)

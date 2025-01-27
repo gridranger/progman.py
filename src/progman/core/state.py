@@ -34,3 +34,9 @@ class State:
         self.shortcuts.append(new_item)
         for tag in new_item.tags:
             self._groups[tag].append(new_item)
+
+    def add_shortcut_to_new_group(self, shortcut: Shortcut) -> None:
+        group = shortcut.tags[-1]
+        self._groups[group].append(shortcut)
+        if group in self.group_windows:
+            self.group_windows[group].add_icon(shortcut)
