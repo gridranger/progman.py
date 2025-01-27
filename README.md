@@ -1,6 +1,8 @@
 # progman.py
 
-Launcher inspired by progman.exe from Win 3.1.
+_Launcher inspired by progman.exe from Win 3.1._
+
+[![QualityGate](https://github.com/gridranger/progman.py/actions/workflows/main.yml/badge.svg)](https://github.com/gridranger/progman.py/actions/workflows/main.yml)
 
 It is designed to be platform-independent but platform-dependent development happen currently on the Windows-side first.
 
