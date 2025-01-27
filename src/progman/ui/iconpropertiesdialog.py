@@ -1,7 +1,7 @@
 from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
-from tkinter import Button, Entry, Frame, Label, StringVar, Tk, Toplevel
+from tkinter import Button, Entry, Frame, Label, StringVar, Tk, Toplevel, Event
 from tkinter.constants import DISABLED, END, HORIZONTAL, NORMAL
 from tkinter.filedialog import askopenfilename
 from tkinter.simpledialog import Dialog
@@ -132,6 +132,7 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
         self._program_group_dropdown = Combobox(self._settings_frame, textvariable=self._selected_group, values=options,
                                                 width=37)
         self._program_group_dropdown.grid(column=1, row=4, **self._basic_kwargs)
+        self._program_group_dropdown.bind("<<ComboboxSelected>>", self._update_ok_button)
         self._icon_preview = Label(self._settings_frame, image=asset_storage["new"], bg=self.theme.background)
         self._icon_preview.grid(column=0, row=5, **self._basic_kwargs)
         self._settings_frame.grid(column=0, row=0, **self._basic_kwargs)
@@ -172,7 +173,7 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
         self._update_ok_button()
         return result
 
-    def _update_ok_button(self) -> None:
+    def _update_ok_button(self, _: Event | None = None) -> None:
         if not self._ok_button:
             return
         if all([value for value in self._validity.values()]):
