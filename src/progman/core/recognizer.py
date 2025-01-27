@@ -97,6 +97,8 @@ class Recognizer:
 
     @classmethod
     def categorize(cls, shortcut: Shortcut) -> None:
+        if shortcut.tags:
+            return
         if any([name_part in shortcut.name for name_part in cls.negative_name_hints]):
             shortcut.tags = [Tags.HIDDEN.value]
             return
