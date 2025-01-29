@@ -22,6 +22,7 @@ class Icon(ABC, Frame, ProgmanWidget):
         self._text_label: Label | None = None
         self._context_menu = None
         self._menu_items = []
+        self._sub_menus: dict[str, Menu] = {}
 
     @property
     @abstractmethod
@@ -73,12 +74,15 @@ class Icon(ABC, Frame, ProgmanWidget):
     def _render_context_menu(self) -> None:
         self._context_menu = Menu(self, tearoff=0)
         for item in self._menu_items:
-            if item.label == "separator":
+            if item.type == "separator":
                 self._context_menu.add_separator()
+            elif item.type == "submenu":
+                self._sub_menus[item.label] = Menu(self._context_menu, tearoff=0)
+                self._context_menu.add_cascade(label=self.get_label(item.label), menu=self._sub_menus[item.label])
             else:
                 self._context_menu.add_command(label=self.get_label(item.label), command=item.command, state=item.state)
-        self._icon_label.bind("<Button-3>", self._show_context_menu)
-        self._text_label.bind("<Button-3>", self._show_context_menu)
+        self._icon_label.bind("<Button-3>", self.show_context_menu)
+        self._text_label.bind("<Button-3>", self.show_context_menu)
 
-    def _show_context_menu(self, event: Event) -> None:
+    def show_context_menu(self, event: Event) -> None:
         self._context_menu.post(event.x_root, event.y_root)

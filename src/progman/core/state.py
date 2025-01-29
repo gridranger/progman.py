@@ -1,7 +1,7 @@
 from core.group import Group
 from core.language import Language
 from core.shortcut import Shortcut
-from core.tags import Tags
+from core.tags import HIDDEN_TAGS, Tags
 from core.theme import Theme
 
 
@@ -25,6 +25,12 @@ class State:
             self._groups.setdefault(Tags.NEW.value, Group(Tags.NEW.value))
             self._groups.setdefault(Tags.HIDDEN.value, Group(Tags.HIDDEN.value))
         return self._groups
+
+    @property
+    def public_groups(self) -> list[str]:
+        groups = [group_name for group_name in self._groups if group_name not in HIDDEN_TAGS]
+        groups.sort()
+        return groups
 
     def add_group(self, group: Group) -> None:
         geometry = f"{group.size[0]}x{group.size[1]}+{group.position[0]}+{group.position[1]}"

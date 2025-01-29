@@ -1,5 +1,6 @@
+from functools import partial
 from subprocess import Popen
-from tkinter import PhotoImage
+from tkinter import Event, PhotoImage
 from tkinter.constants import DISABLED
 
 from core import MenuItem, Shortcut
@@ -14,12 +15,13 @@ class AppIcon(Icon):
         Icon.__init__(self, *args, **kwargs)
         self._shortcut = shortcut
         self._menu_items = [
-            MenuItem("copy", state=DISABLED),
-            MenuItem("copy_to", state=DISABLED),
-            MenuItem("move_to", state=DISABLED),
+            MenuItem("copy_to", state=DISABLED, type="submenu"),
+            MenuItem("move_to", state=DISABLED, type="submenu"),
             MenuItem("delete", command=self.delete_icon),
+            MenuItem("separator"),
             MenuItem("properties", command=self.edit_properties),
         ]
+        self._last_keys = set()
 
     def shortcut(self) -> Shortcut:
         return self._shortcut
@@ -82,3 +84,19 @@ class AppIcon(Icon):
 
     def delete_icon(self) -> None:
         self.drawer.delete_icon(self, self._shortcut)
+
+    def show_context_menu(self, event: Event) -> None:
+        if self.app_state.public_groups != self._last_keys:
+            for key in self._last_keys:
+                self._sub_menus["move_to"].delete(key)
+                self._sub_menus["copy_to"].delete(key)
+            for key in self.app_state.public_groups:
+                self._sub_menus["move_to"].add_command(label=key, command=partial(self._move_to_group, key), state=DISABLED)
+                self._sub_menus["copy_to"].add_command(label=key, command=partial(self._move_to_group, key), state=DISABLED)
+        Icon.show_context_menu(self, event)
+
+    def _move_to_group(self, group: str) -> None:
+        print("move", group)
+
+    def _copy_to_group(self, group: str) -> None:
+        print("copy", group)

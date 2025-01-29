@@ -1,12 +1,11 @@
 
-from core import Group, Tags
+from core import HIDDEN_TAGS, Group
 from ui.groupicon import GroupIcon
 from ui.groupwindow import GroupWindow
 from ui.icondrawer import IconDrawer
 
 
 class GroupDrawer(IconDrawer):
-    DISABLED_GROUPS = [Tags.HIDDEN.value, Tags.NEW.value]
 
     def __init__(self, parent: any) -> None:
         IconDrawer.__init__(self, parent)
@@ -20,7 +19,7 @@ class GroupDrawer(IconDrawer):
 
     def _render_icons(self) -> None:
         for group_name, group in self.app_state.groups.items():
-            if group_name in self.DISABLED_GROUPS:
+            if group_name in HIDDEN_TAGS:
                 continue
             self._add_icon(group_name)
 
