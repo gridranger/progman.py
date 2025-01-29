@@ -1,16 +1,20 @@
 from abc import ABC, abstractmethod
 from tkinter import Event, Frame, Label, Menu, PhotoImage
+from typing import TYPE_CHECKING
 
 from ui.progmanwidgets import ProgmanWidget
 
+if TYPE_CHECKING:
+    from ui.icondrawer import IconDrawer
 
 class Icon(ABC, Frame, ProgmanWidget):
     WIDTH = 84
     HEIGHT = 76
 
-    def __init__(self, *args: any, **kwargs: any) -> None:
+    def __init__(self, drawer: "IconDrawer", *args: any, **kwargs: any) -> None:
         Frame.__init__(self, *args, **kwargs, width=self.WIDTH, height=self.HEIGHT)
         ProgmanWidget.__init__(self, 'icon')
+        self.drawer = drawer
         self.configure(background=self.theme.background)
         self._icon = None
         self._icon_label: Label | None = None

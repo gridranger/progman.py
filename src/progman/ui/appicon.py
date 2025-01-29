@@ -17,7 +17,7 @@ class AppIcon(Icon):
             MenuItem("copy", state=DISABLED),
             MenuItem("copy_to", state=DISABLED),
             MenuItem("move_to", state=DISABLED),
-            MenuItem("delete", state=DISABLED),
+            MenuItem("delete", command=self.delete_icon),
             MenuItem("properties", command=self.edit_properties),
         ]
 
@@ -79,3 +79,6 @@ class AppIcon(Icon):
     def _update_tags(self, new_tag: str) -> None:
         self._shortcut.tags.append(new_tag)
         self.app_state.add_shortcut_to_new_group(self._shortcut)
+
+    def delete_icon(self) -> None:
+        self.drawer.delete_icon(self, self._shortcut)

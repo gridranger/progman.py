@@ -1,6 +1,6 @@
 from tkinter import Misc
 
-from core import Shortcut
+from core import Shortcut, Tags
 from ui.appicon import AppIcon
 from ui.icondrawer import IconDrawer
 
@@ -14,9 +14,17 @@ class AppDrawer(IconDrawer):
     def _render_icons(self) -> None:
         for shortcut in self.app_state.shortcuts:
             if self._category in shortcut.tags:
-                self._icons.append(AppIcon(shortcut, self.viewPort))
+                self._icons.append(AppIcon(shortcut, self, self.viewPort))
 
     def add_icon(self, shortcut: Shortcut) -> None:
-        self._icons.append(AppIcon(shortcut, self.viewPort))
+        self._icons.append(AppIcon(shortcut, self, self.viewPort))
         self._icons[-1].render()
+        self._arrange_icons()
+
+    def delete_icon(self, icon: AppIcon, shortcut: Shortcut) -> None:
+        shortcut.tags.remove(self._category)
+        if not shortcut.tags:
+            shortcut.tags.append(Tags.HIDDEN.value)
+        self._icons.remove(icon)
+        icon.destroy()
         self._arrange_icons()

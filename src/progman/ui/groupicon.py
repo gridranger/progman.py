@@ -2,12 +2,13 @@ from tkinter import Misc, PhotoImage
 
 from assets import asset_storage
 from ui.icon import Icon
+from ui.progmanwidgets import ProgmanWidget
 
 
 class GroupIcon(Icon):
 
-    def __init__(self, parent: Misc | None, group_name: str, *args: any, **kwargs: any) -> None:
-        Icon.__init__(self, parent, *args, **kwargs)
+    def __init__(self, drawer: ProgmanWidget, parent: Misc | None, group_name: str, *args: any, **kwargs: any) -> None:
+        Icon.__init__(self, drawer, parent, *args, **kwargs)
         self._group_name = group_name
 
     @property

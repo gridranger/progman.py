@@ -25,7 +25,7 @@ class GroupDrawer(IconDrawer):
             self._add_icon(group_name)
 
     def _add_icon(self, group_name: str) -> None:
-        icon = GroupIcon(self.viewPort, group_name)
+        icon = GroupIcon(self, self.viewPort, group_name)
         self._icons.append(icon)
 
     def launch_child_window(self, group_name: str) -> None:
