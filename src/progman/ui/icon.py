@@ -7,6 +7,7 @@ from ui.progmanwidgets import ProgmanWidget
 if TYPE_CHECKING:
     from ui.icondrawer import IconDrawer
 
+
 class Icon(ABC, Frame, ProgmanWidget):
     WIDTH = 84
     HEIGHT = 76
