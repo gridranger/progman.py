@@ -43,6 +43,7 @@ class State:
 
     def copy_shortcut_to_new_group(self, shortcut: Shortcut, group: str) -> None:
         shortcut.tags.append(group)
+        shortcut.managed_by_user = True
         self._groups[group].append(shortcut)
         if group in self.group_windows:
             self.group_windows[group].add_icon(shortcut)

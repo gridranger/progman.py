@@ -55,7 +55,7 @@ class DataHandler:
             "theme": self._state.theme.name,
             "language": self._state.language.content["language"],
             "groups": self._serialize_groups(),
-            "shortcuts": [self._serialize(shortcut) for shortcut in self._state.shortcuts if shortcut.created_by_user]
+            "shortcuts": [self._serialize(shortcut) for shortcut in self._state.shortcuts if shortcut.managed_by_user]
         }
 
     @staticmethod

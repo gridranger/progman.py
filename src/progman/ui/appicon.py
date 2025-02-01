@@ -1,7 +1,6 @@
 from functools import partial
 from subprocess import Popen
 from tkinter import Event, PhotoImage
-from tkinter.constants import DISABLED
 
 from core import MenuItem, Shortcut
 from platforms import IconLoader
@@ -72,7 +71,7 @@ class AppIcon(Icon):
             self._copy_to_group(new_shortcut.tags[0])
             any_changes = True
         if any_changes:
-            self._shortcut.created_by_user = True
+            self._shortcut.managed_by_user = True
 
     def _update_icon(self) -> None:
         self._icon = None
@@ -86,12 +85,13 @@ class AppIcon(Icon):
             self.delete_items_from_menu(self._sub_menus["move_to"])
             self.delete_items_from_menu(self._sub_menus["copy_to"])
             for key in self.app_state.public_groups:
-                self._sub_menus["move_to"].add_command(label=key, command=partial(self._move_to_group, key), state=DISABLED)
+                self._sub_menus["move_to"].add_command(label=key, command=partial(self._move_to_group, key))
                 self._sub_menus["copy_to"].add_command(label=key, command=partial(self._copy_to_group, key))
         Icon.show_context_menu(self, event)
 
     def _move_to_group(self, group: str) -> None:
-        print("move", group)
+        self.app_state.copy_shortcut_to_new_group(self._shortcut, group)
+        self.delete_icon()
 
     def _copy_to_group(self, group: str) -> None:
         self.app_state.copy_shortcut_to_new_group(self._shortcut, group)

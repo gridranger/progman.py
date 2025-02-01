@@ -6,7 +6,7 @@ from pathlib import Path
 @dataclass
 class Shortcut:
     FIELDS_TO_SAVE = ["target_path", "arguments", "workdir_path", "separate_icon_path", "icon_index", "name",
-                      "link_path", "description", "hotkey", "created_by_user", "tags"]
+                      "link_path", "description", "hotkey", "managed_by_user", "tags"]
 
     target_path: str
     arguments: str
@@ -17,7 +17,7 @@ class Shortcut:
     link_path: str = ""
     description: str = ""
     hotkey: str = ""
-    created_by_user: bool = False
+    managed_by_user: bool = False
     tags: list[str] = field(default_factory=list)
 
     def __post_init__(self) -> None:

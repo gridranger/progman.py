@@ -314,6 +314,6 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
             workdir_path=self._working_directory_input.get().strip(),
             separate_icon_path=self._icon_path,
             name=self._name_input.get().strip(),
-            created_by_user=True,
+            managed_by_user=True,
             tags=[self._selected_group.get()]
         )
