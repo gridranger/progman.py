@@ -15,8 +15,8 @@ class AppIcon(Icon):
         Icon.__init__(self, *args, **kwargs)
         self._shortcut = shortcut
         self._menu_items = [
-            MenuItem("copy_to", state=DISABLED, type="submenu"),
-            MenuItem("move_to", state=DISABLED, type="submenu"),
+            MenuItem("copy_to", type="submenu"),
+            MenuItem("move_to", type="submenu"),
             MenuItem("delete", command=self.delete_icon),
             MenuItem("separator"),
             MenuItem("properties", command=self.edit_properties),
@@ -69,7 +69,7 @@ class AppIcon(Icon):
             self._update_icon()
             any_changes = True
         if new_shortcut.tags[0] not in self._shortcut.tags:
-            self._update_tags(new_shortcut.tags[0])
+            self._copy_to_group(new_shortcut.tags[0])
             any_changes = True
         if any_changes:
             self._shortcut.created_by_user = True
@@ -78,25 +78,20 @@ class AppIcon(Icon):
         self._icon = None
         self._icon_label.configure(image=self.icon)
 
-    def _update_tags(self, new_tag: str) -> None:
-        self._shortcut.tags.append(new_tag)
-        self.app_state.add_shortcut_to_new_group(self._shortcut)
-
     def delete_icon(self) -> None:
         self.drawer.delete_icon(self, self._shortcut)
 
     def show_context_menu(self, event: Event) -> None:
         if self.app_state.public_groups != self._last_keys:
-            for key in self._last_keys:
-                self._sub_menus["move_to"].delete(key)
-                self._sub_menus["copy_to"].delete(key)
+            self.delete_items_from_menu(self._sub_menus["move_to"])
+            self.delete_items_from_menu(self._sub_menus["copy_to"])
             for key in self.app_state.public_groups:
                 self._sub_menus["move_to"].add_command(label=key, command=partial(self._move_to_group, key), state=DISABLED)
-                self._sub_menus["copy_to"].add_command(label=key, command=partial(self._move_to_group, key), state=DISABLED)
+                self._sub_menus["copy_to"].add_command(label=key, command=partial(self._copy_to_group, key))
         Icon.show_context_menu(self, event)
 
     def _move_to_group(self, group: str) -> None:
         print("move", group)
 
     def _copy_to_group(self, group: str) -> None:
-        print("copy", group)
+        self.app_state.copy_shortcut_to_new_group(self._shortcut, group)

@@ -32,10 +32,11 @@ class TestState:
         self.test_object._groups = {"foo": Mock(), "bar": Mock(), "baz": Mock(), "New": Mock()}
         assert self.test_object.public_groups == ["bar", "baz", "foo"]
 
-    def test_add_shortcut_to_new_group(self):
-        mock_shortcut = Mock(tags=["fizz", "foo"])
-        self.test_object._groups["foo"] = Mock()
-        self.test_object.group_windows = {"foo": Mock()}
-        self.test_object.add_shortcut_to_new_group(mock_shortcut)
-        self.test_object._groups["foo"].append.assert_called_once_with(mock_shortcut)
-        self.test_object.group_windows["foo"].add_icon.assert_called_once_with(mock_shortcut)
+    def test_copy_shortcut_to_new_group(self):
+        mock_shortcut = Mock(tags=["foo"])
+        self.test_object._groups = {"foo": Mock(), "bar": Mock()}
+        self.test_object.group_windows = {"foo": Mock(), "bar": Mock()}
+        self.test_object.copy_shortcut_to_new_group(mock_shortcut, "bar")
+        assert mock_shortcut.tags == ["foo", "bar"]
+        self.test_object._groups["bar"].append.assert_called_once_with(mock_shortcut)
+        self.test_object.group_windows["bar"].add_icon.assert_called_once_with(mock_shortcut)
