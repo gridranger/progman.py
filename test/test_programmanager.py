@@ -1,6 +1,7 @@
 from unittest.mock import Mock, patch
 
-from programmanager import ProgramManager
+with patch("platform.system", return_value="windows"):  # TODO remove this line when linux implementation is added
+    from programmanager import ProgramManager
 
 
 class TestProgramManager:
