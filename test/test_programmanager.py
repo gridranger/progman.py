@@ -1,6 +1,8 @@
 from unittest.mock import Mock, patch
 
-with patch("platform.system", return_value="windows"):  # TODO remove this line when linux implementation is added
+with patch("platforms.system", return_value="windows"), \
+        patch("platforms.windowsiconloader.WindowsIconLoader"), \
+        patch("platforms.windowsshortcutcollector.WindowsShortcutCollector"):  # TODO remove this line when linux implementation is added
     from programmanager import ProgramManager
 
 
