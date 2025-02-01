@@ -23,6 +23,6 @@ class ProgramManager:
             Recognizer.categorize(shortcut)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     p = ProgramManager()
     p.run()
