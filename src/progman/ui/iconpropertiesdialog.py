@@ -9,7 +9,7 @@ from tkinter.ttk import Combobox, Separator
 from typing import Literal
 
 from assets import asset_storage
-from core import Shortcut, Tags, HIDDEN_TAGS
+from core import HIDDEN_TAGS, Shortcut, Tags
 from platforms import IconLoader
 from ui.progmanwidgets import ProgmanWidget
 
