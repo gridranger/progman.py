@@ -9,7 +9,7 @@ from tkinter.ttk import Combobox, Separator
 from typing import Literal
 
 from assets import asset_storage
-from core import Shortcut
+from core import Shortcut, Tags, HIDDEN_TAGS
 from platforms import IconLoader
 from ui.progmanwidgets import ProgmanWidget
 
@@ -52,7 +52,7 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
         self._working_directory_feedback = None
         self._icon_path = ""
         self._icon_preview = None
-        self._selected_group = StringVar()
+        self._selected_group = StringVar(self, Tags.NEW.value)
         self._program_group_label = None
         self._program_group_dropdown = None
         self._ok_button = None
@@ -128,7 +128,7 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
         self._working_directory_input = self._get_input(self._validate_workdir_path, "focusout", 3)
         self._working_directory_feedback = self._get_feedback_label(3)
         self._program_group_label = self._get_default_label("program_group", 4)
-        options = list(self.app_state.groups.keys())
+        options = [key for key in self.app_state.groups.keys() if key not in HIDDEN_TAGS]
         self._program_group_dropdown = Combobox(self._settings_frame, textvariable=self._selected_group, values=options,
                                                 width=37)
         self._program_group_dropdown.grid(column=1, row=4, **self._basic_kwargs)
@@ -206,10 +206,16 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
         else:
             self._target_path_feedback.config(text=self._nokay)
         self._validity["target"] = okay_validity
+        self._validate_workdir_path(self._working_directory_input.get())
         self._update_ok_button()
         return field_validity
 
     def _validate_workdir_path(self, new_value: str) -> bool:
+        if self._target_path_input.get().startswith("http"):
+            self._validity["workdir"] = True
+            self._working_directory_feedback.config(text=self._okay)
+            self._update_ok_button()
+            return True
         if '"' in new_value:
             cleaned_value = new_value.replace('"', "")
             self._working_directory_input.delete(0, END)
