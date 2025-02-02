@@ -1,6 +1,7 @@
 from functools import partial
 from subprocess import Popen
 from tkinter import Event, PhotoImage
+from webbrowser import open
 
 from core import MenuItem, Shortcut
 from platforms import IconLoader
@@ -39,7 +40,10 @@ class AppIcon(Icon):
         return self._shortcut.name
 
     def _launch(self) -> None:
-        Popen(self._shortcut.launch_command)
+        if self._shortcut.is_web_link:
+            open(self._shortcut.target_path)
+        else:
+            Popen(self._shortcut.launch_command)
 
     def rename(self) -> None:
         self._text_label.configure(text=self._label)

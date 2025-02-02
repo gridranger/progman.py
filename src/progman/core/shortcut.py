@@ -40,6 +40,10 @@ class Shortcut:
     def launch_command(self) -> list[str]:
         return [self.target_path] + self.arguments.split()
 
+    @property
+    def is_web_link(self) -> bool:
+        return self.target_path.startswith("http")
+
     def __eq__(self, other: "Shortcut") -> bool:
         if name == "nt":
             return (self.target_path.lower() == other.target_path.lower() and

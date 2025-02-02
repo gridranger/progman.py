@@ -194,6 +194,10 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
         if not len(stripped_new_value):
             self._target_path_feedback.config(text=self._eyes)
             field_validity = True
+        elif new_value.startswith("http"):
+            self._target_path_feedback.config(text=self._okay)
+            okay_validity = True
+            field_validity = True
         elif value_as_path.is_file():
             self._target_path_feedback.config(text=self._okay)
             self._load_icon(str(value_as_path))

@@ -21,6 +21,12 @@ class WindowsIconLoader:
     @classmethod
     def load(cls, shortcut: Shortcut | str) -> PhotoImage:
         try:
+            if shortcut.startswith("http"):
+                return asset_storage["url"]
+        except AttributeError:
+            if not shortcut.separate_icon_path and shortcut.is_web_link:
+                return asset_storage["url"]
+        try:
             path = Path(shortcut.icon)
             index = shortcut.icon_index
         except AttributeError:
