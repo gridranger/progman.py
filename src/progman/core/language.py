@@ -18,9 +18,9 @@ class Language:
             "window_list": "Window list"
         },
         "icon": {
-            "copy": "Copy",
-            "copy_to": "Copy to...",
-            "move_to": "Move to...",
+            "copy_as_new": "Copy as new...",
+            "copy_to": "Copy to",
+            "move_to": "Move to",
             "delete": "Delete",
             "properties": "Properties..."
         },
@@ -37,6 +37,7 @@ class Language:
             "browse": "Browse...",
             "cancel": "Cancel",
             "change_icon": "Change icon...",
+            "copy_as_new": "Copy as new...",
             "edit_icon": "Edit icon properties",
             "name": "Name:",
             "new_icon": "New icon properties",

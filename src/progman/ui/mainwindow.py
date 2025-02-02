@@ -101,7 +101,4 @@ class MainWindow(Tk, ProgmanWidget, Window):
         dialog = IconPropertiesDialog(self, "new_icon")
         if dialog.result:
             self.app_state.add_shortcut(dialog.result)
-            for tag in dialog.result.tags:
-                group = self.app_state.group_windows[tag]
-                group.add_icon(dialog.result)
     # endregion

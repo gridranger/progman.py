@@ -14,6 +14,7 @@ class AppIcon(Icon):
         Icon.__init__(self, *args, **kwargs)
         self._shortcut = shortcut
         self._menu_items = [
+            MenuItem("copy_as_new", command=self.copy_as_new),
             MenuItem("copy_to", type="submenu"),
             MenuItem("move_to", type="submenu"),
             MenuItem("delete", command=self.delete_icon),
@@ -95,3 +96,8 @@ class AppIcon(Icon):
 
     def _copy_to_group(self, group: str) -> None:
         self.app_state.copy_shortcut_to_new_group(self._shortcut, group)
+
+    def copy_as_new(self) -> None:
+        dialog = IconPropertiesDialog(self, "copy_as_new", self._shortcut)
+        if dialog.result:
+            self.app_state.add_shortcut(dialog.result)
