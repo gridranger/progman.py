@@ -1,7 +1,6 @@
 from tkinter import Event, Tk
 
 from core import State
-from platforms import DataHandler
 from ui.groupdrawer import GroupDrawer
 from ui.iconpropertiesdialog import IconPropertiesDialog
 from ui.menubar import Menubar
@@ -18,8 +17,8 @@ class MainWindow(Tk, ProgmanWidget, Window):
         ProgmanWidget.__init__(self, "root")
         Window.__init__(self, "progman")
         self._menubar = None
-        self._data_handler = DataHandler(self.app_state)
         self._is_first_render = True
+        self._run_test_hook = lambda: None
 
     # region Properties
     @property
@@ -41,10 +40,7 @@ class MainWindow(Tk, ProgmanWidget, Window):
         ProgmanWidget.render(self)
         self._icon_drawer.set_initial_geometry()
         if self._is_first_render:
-            self.bind("<Map>", self._on_deiconify)
-            self.bind("<Unmap>", self._on_iconify)
-            self._icon_drawer.restore_last_windows()
-            self._is_first_render = False
+            self._execute_first_render_only_actions()
 
     def _render_title(self) -> None:
         self._set_title()
@@ -67,16 +63,16 @@ class MainWindow(Tk, ProgmanWidget, Window):
     def update_theme(self) -> None:
         self.configure(bg=self.theme.background)
         ProgmanWidget.update_theme(self)
+
+    def _execute_first_render_only_actions(self) -> None:
+        self.bind("<Map>", self._on_deiconify)
+        self.bind("<Unmap>", self._on_iconify)
+        self._icon_drawer.restore_last_windows()
+        self._is_first_render = False
+        self._run_test_hook()
     # endregion
 
     # region Actions
-    def save(self) -> None:
-        self._data_handler.save()
-
-    def save_on_quit(self) -> None:
-        self.save()
-        self.destroy()
-
     def _on_iconify(self, event: Event) -> None:
         if event.widget == self:
             self._icon_drawer.minimize_child_windows()

@@ -8,8 +8,8 @@ from core import Language, Savable, Shortcut, State, Theme
 
 class DataHandler:
 
-    def __init__(self, state: State = None) -> None:
-        self._state = state or State()
+    def __init__(self) -> None:
+        self._state = State()
         self._last_saved_state = {}
 
     @property
@@ -28,10 +28,11 @@ class DataHandler:
 
     def load(self) -> State:
         if not self._settings_folder_path.exists() or not self._file_path.exists():
-            return State()
+            return self._state
         with Path(self._file_path).open() as file_handler:
             self._last_saved_state = load(file_handler)
-        return self._load_state()
+        self._state = self._load_state()
+        return self._state
 
     def _load_state(self) -> State:
         new_state = State()
