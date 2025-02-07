@@ -24,7 +24,11 @@ class AppDrawer(IconDrawer):
     def delete_icon(self, icon: AppIcon, shortcut: Shortcut) -> None:
         shortcut.tags.remove(self._category)
         if not shortcut.tags:
-            shortcut.tags.append(Tags.HIDDEN.value)
+            if shortcut.managed_by_user:
+                self.app_state.shortcuts.remove(shortcut)
+            else:
+                shortcut.managed_by_user = True
+                shortcut.tags.append(Tags.HIDDEN.value)
         self._icons.remove(icon)
         icon.destroy()
         self._arrange_icons()
