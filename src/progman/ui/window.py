@@ -2,12 +2,14 @@ from abc import ABC, abstractmethod
 from tkinter import Event, Tk
 
 from assets import asset_storage
+from ui.contextmenu import ContextMenu
 
 
-class Window(ABC):
+class Window(ABC, ContextMenu):
     DEFAULT_DIMENSIONS = "253x172"
 
     def __init__(self, icon_name: str) -> None:
+        ContextMenu.__init__(self)
         self._icon_name = icon_name
         self._icon = None
         self._icon_drawer = None
@@ -18,6 +20,8 @@ class Window(ABC):
 
     def render(self: Tk) -> None:
         self._render_window()
+        self.render_context_menu()
+        self.bind_context_menu_to([self])
 
     @abstractmethod
     def _render_title(self) -> None:
@@ -40,3 +44,7 @@ class Window(ABC):
     def render_drawer(self) -> None:
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
+
+    def show_context_menu(self, event: Event) -> None:
+        if event.widget.widgetName != "label":
+            ContextMenu.show_context_menu(self, event)
