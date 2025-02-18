@@ -31,4 +31,3 @@ class ContextMenu:
 
     def show_context_menu(self, event: Event) -> None:
         self._context_menu.post(event.x_root, event.y_root)
-        print(event.widget)

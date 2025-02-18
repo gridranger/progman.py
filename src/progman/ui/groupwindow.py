@@ -1,6 +1,6 @@
 from tkinter import Event, Misc, Toplevel
 
-from core import Shortcut
+from core import MenuItem, Shortcut
 from ui.appdrawer import AppDrawer
 from ui.progmanwidgets import ProgmanWidget
 from ui.window import Window
@@ -14,6 +14,11 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
         ProgmanWidget.__init__(self, "window")
         Window.__init__(self, "group")
         self._group_name = group_name
+        self._menu_items = [
+            MenuItem("new_icon", self._create_new_icon, state="disabled"),
+            MenuItem("add_uncategorized", self._add_uncategorized_icon, state="disabled"),
+            MenuItem("add_hidden", self._add_hidden_icon, state="disabled"),
+        ]
 
     @property
     def group_name(self) -> str:
@@ -45,3 +50,12 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
 
     def add_icon(self, new_shortcut: Shortcut) -> None:
         self._icon_drawer.add_icon(new_shortcut)
+
+    def _create_new_icon(self) -> None:
+        pass
+
+    def _add_uncategorized_icon(self) -> None:
+        pass
+
+    def _add_hidden_icon(self) -> None:
+        pass

@@ -46,4 +46,9 @@ class Language:
             "target_path": "Target path:",
             "working_directory": "Working directory:"
         },
+        "window": {
+            "new_icon": "New icon...",
+            "add_uncategorized": "Add uncategorized icon",
+            "add_hidden": "Add hidden icon"
+        }
     }
