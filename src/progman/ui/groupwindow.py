@@ -2,6 +2,7 @@ from tkinter import Event, Misc, Toplevel
 
 from core import MenuItem, Shortcut
 from ui.appdrawer import AppDrawer
+from ui.iconpropertiesdialog import IconPropertiesDialog
 from ui.progmanwidgets import ProgmanWidget
 from ui.window import Window
 
@@ -15,7 +16,7 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
         Window.__init__(self, "group")
         self._group_name = group_name
         self._menu_items = [
-            MenuItem("new_icon", self._create_new_icon, state="disabled"),
+            MenuItem("new_icon", self._create_new_icon),
             MenuItem("add_uncategorized", self._add_uncategorized_icon, state="disabled"),
             MenuItem("add_hidden", self._add_hidden_icon, state="disabled"),
         ]
@@ -52,7 +53,9 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
         self._icon_drawer.add_icon(new_shortcut)
 
     def _create_new_icon(self) -> None:
-        pass
+        dialog = IconPropertiesDialog(self, "new_icon", default_group=self._group_name)
+        if dialog.result:
+            self.app_state.add_shortcut(dialog.result)
 
     def _add_uncategorized_icon(self) -> None:
         pass

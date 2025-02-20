@@ -27,7 +27,7 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
         Reason: The body frame should grid geometry manager rather than pack.
     """
 
-    def __init__(self, parent: Tk | Frame, title: str, shortcut: Shortcut | None = None) -> None:
+    def __init__(self, parent: Tk | Frame, title: str, shortcut: Shortcut | None = None, default_group: str = "") -> None:
         ProgmanWidget.__init__(self, "new_icon_window")
         Toplevel.__init__(self, parent)
         self._basic_kwargs = {"padx": 5, "pady": 5}
@@ -52,7 +52,7 @@ class IconPropertiesDialog(Dialog, ProgmanWidget):
         self._working_directory_feedback = None
         self._icon_path = ""
         self._icon_preview = None
-        self._selected_group = StringVar(self, Tags.NEW.value)
+        self._selected_group = StringVar(self, default_group if default_group else Tags.NEW.value)
         self._program_group_label = None
         self._program_group_dropdown = None
         self._ok_button = None
