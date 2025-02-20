@@ -1,6 +1,7 @@
+from functools import partial
 from tkinter import Event, Misc, Toplevel
 
-from core import MenuItem, Shortcut
+from core import HIDDEN_TAGS, Group, MenuItem, Shortcut
 from ui.appdrawer import AppDrawer
 from ui.iconpropertiesdialog import IconPropertiesDialog
 from ui.progmanwidgets import ProgmanWidget
@@ -17,9 +18,10 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
         self._group_name = group_name
         self._menu_items = [
             MenuItem("new_icon", self._create_new_icon),
-            MenuItem("add_uncategorized", self._add_uncategorized_icon, state="disabled"),
-            MenuItem("add_hidden", self._add_hidden_icon, state="disabled"),
+            MenuItem("add_new", type="submenu"),
+            MenuItem("add_hidden", type="submenu")
         ]
+        self._group_hashes = dict([(tag, 0) for tag in HIDDEN_TAGS])
 
     @property
     def group_name(self) -> str:
@@ -57,8 +59,20 @@ class GroupWindow(Toplevel, ProgmanWidget, Window):
         if dialog.result:
             self.app_state.add_shortcut(dialog.result)
 
-    def _add_uncategorized_icon(self) -> None:
-        pass
+    def show_context_menu(self, event: Event) -> None:
+        for tag in HIDDEN_TAGS:
+            if hash(self.app_state.groups[tag]) != self._group_hashes[tag]:
+                self.delete_items_from_menu(self._sub_menus["add_" + tag.lower()])
+                self._generate_group_menu(self.app_state.groups[tag], tag)
+        Window.show_context_menu(self, event)
 
-    def _add_hidden_icon(self) -> None:
-        pass
+    def _generate_group_menu(self, group: Group, tag: str) -> None:
+        sub_menu = f"add_{tag.lower()}"
+        for shortcut in sorted(group.shortcuts, key=lambda x: x.name.lower()):
+            name = f"{shortcut.name} ({shortcut.target_path})" if shortcut.target_path else shortcut.name
+            self._sub_menus[sub_menu].add_command(label=name,
+                                                  command=partial(self._add_hidden_tagged_shortcut, shortcut))
+        self._group_hashes[tag] = hash(self.app_state.groups[tag])
+
+    def _add_hidden_tagged_shortcut(self, shortcut: Shortcut) -> None:
+        self.app_state.unhide_shortcut(shortcut, self._group_name)

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from tkinter import END, Event, Frame, Label, Menu, PhotoImage
+from tkinter import Event, Frame, Label, PhotoImage
 from typing import TYPE_CHECKING
 
 from ui.contextmenu import ContextMenu
@@ -70,9 +70,3 @@ class Icon(ABC, Frame, ProgmanWidget, ContextMenu):
     def deselect(self) -> None:
         self._text_label.config(background=self.theme.background,
                                 foreground=self.theme.foreground)
-
-    def delete_items_from_menu(self, menu: Menu) -> None:
-        menu_items = menu.index(END)
-        if menu_items is not None:
-            for i in range(menu_items, -1, -1):
-                menu.delete(i)

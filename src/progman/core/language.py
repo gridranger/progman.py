@@ -48,7 +48,7 @@ class Language:
         },
         "window": {
             "new_icon": "New icon...",
-            "add_uncategorized": "Add uncategorized icon",
+            "add_new": "Add uncategorized icon",
             "add_hidden": "Add hidden icon"
         }
     }

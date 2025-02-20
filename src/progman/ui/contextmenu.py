@@ -1,4 +1,4 @@
-from tkinter import Event, Menu, Misc
+from tkinter import END, Event, Menu, Misc
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -31,3 +31,10 @@ class ContextMenu:
 
     def show_context_menu(self, event: Event) -> None:
         self._context_menu.post(event.x_root, event.y_root)
+
+    @staticmethod
+    def delete_items_from_menu(menu: Menu) -> None:
+        menu_items = menu.index(END)
+        if menu_items is not None:
+            for i in range(menu_items, -1, -1):
+                menu.delete(i)

@@ -50,3 +50,10 @@ class State:
         self._groups[group].append(shortcut)
         if group in self.group_windows:
             self.group_windows[group].add_icon(shortcut)
+
+    def unhide_shortcut(self, shortcut: Shortcut, new_group: str) -> None:
+        current_hidden_group = shortcut.tags[0]
+        self._groups[current_hidden_group].shortcuts.remove(shortcut)
+        shortcut.tags = [new_group]
+        shortcut.managed_by_user = True
+        self.add_shortcut(shortcut)
