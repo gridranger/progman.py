@@ -25,3 +25,6 @@ class Group:
         x, _delimiter, y = position.partition("+")
         self.position = (int(x), int(y))
         self.size = (int(width), int(height))
+
+    def __hash__(self) -> int:
+        return hash("".join([str(hash(shortcut)) for shortcut in self.shortcuts]))
