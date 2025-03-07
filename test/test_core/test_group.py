@@ -23,3 +23,14 @@ class TestGroup:
         mock_shortcut = Mock()
         self.test_object.append(mock_shortcut)
         assert self.test_object.shortcuts == [mock_shortcut]
+
+    def test___hash__(self):
+        g1, g2 = Group("a"), Group("b")
+        items = ["apple", "banana", "cherry"]
+        g1.shortcuts = items
+        g2.shortcuts = [i for i in items]
+        assert g1.shortcuts == g2.shortcuts
+        assert g1.shortcuts is not g2.shortcuts
+        assert hash(g1) == hash(g2)
+        g2.shortcuts.pop()
+        assert hash(g1) != hash(g2)

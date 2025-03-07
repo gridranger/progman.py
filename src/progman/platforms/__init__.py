@@ -6,6 +6,7 @@ if system().lower() == "windows":
     from .windowsiconloader import WindowsIconLoader as IconLoader
     from .windowsshortcutcollector import WindowsShortcutCollector as ShortcutCollector
 else:
+    from .linuxiconloder import LinuxIconLoader as IconLoader
     raise NotImplementedError
 
 
